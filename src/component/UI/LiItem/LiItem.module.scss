@@ -1,0 +1,17 @@
+.li {
+  position: relative;
+  left: 10px;
+  line-height: 30px;
+
+   &:after {
+     position: absolute;
+     content: '';
+     left: -10px;
+     width: 5px;
+     height: 5px;
+     top: 13px;
+     border-radius: 100px;
+     background-color: var(--red);
+   }
+
+}

@@ -1,0 +1,36 @@
+.dropList {
+  border: 1px solid var(--black);
+  position: relative;
+  background-color: var(--white);
+  z-index: 2;
+  &:after {
+    content: "";
+    position: absolute;
+    top: -8.5px;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    border-left: 1px solid var(--black);
+    border-top: 1px solid var(--black);
+    transform: rotate(45deg);
+    background-color: var(--white);
+  }
+  li,
+  a {
+    display: flex;
+    padding: 7.5px 20px 7.5px 20px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    color: var(--black);
+    text-decoration: none;
+
+    &:not(:last-child) {
+    }
+    &:hover {
+      background-color: var(--gray);
+    }
+    img {
+      margin-right: 10px;
+    }
+  }
+}
