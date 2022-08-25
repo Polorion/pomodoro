@@ -18,7 +18,11 @@ interface IDropItem {
 const DropItem = (props: IDropItem) => {
   const liClick = () => {
     props.action && props.action(props.id);
-    props.link && histori(`edit/${props.id}`);
+    if (props.link) {
+      props.link && props.title === "Редактировать"
+        ? props.link && histori(`edit/${props.id}`)
+        : histori(`del/${props.id}`);
+    }
   };
 
   const histori = useNavigate();

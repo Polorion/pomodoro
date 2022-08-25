@@ -50,15 +50,14 @@ const DropDownList = (props: IDropDownList) => {
     {
       img: deleted,
       title: "Удалить",
-      action: props.dropDownAPI.deleteTask,
-      link: false,
+      link: true,
     },
   ];
   const ref = useRef<HTMLUListElement>(null);
   useEffect(() => {
     if (ref.current !== null) {
       ref.current.style.top = props.coordinat.y + 35 + window.scrollY + "px";
-      ref.current.style.left = props.coordinat.x - 87 + "px";
+      ref.current.style.left = props.coordinat.x - 80 + "px";
       ref.current.style.position = "absolute";
     }
   }, []);

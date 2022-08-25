@@ -28,11 +28,10 @@ const EditTaskWindow = (props) => {
           e.stopPropagation();
         }}
       >
-        <div className={S.header}>
-          Дело: {props.task.task}
-          <div onClick={exit}>exit</div>
-        </div>
+        <div className={S.exit} onClick={exit}></div>
+        <div className={S.header}></div>
         <div className={S.content}>
+          <p>Дело: {props.task.task}</p>
           <label>
             <input onChange={changeValue} value={props.editInput} type="text" />
           </label>

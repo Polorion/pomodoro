@@ -24,6 +24,7 @@ interface IPomodoroLeft {
   activeTask: string;
   stopTimer: () => {};
   dropDownAPI: {};
+  setCountItem: (count: number, id: string) => {};
 }
 
 const PomodoroLeft = (props: IPomodoroLeft) => {
@@ -65,7 +66,9 @@ const PomodoroLeft = (props: IPomodoroLeft) => {
         <ul>
           {props.allTask.map((el, i) => (
             <Intention
-              key={el.task + i}
+              allTask={props.allTask}
+              setCountItem={props.setCountItem}
+              key={el.task}
               title={el.task}
               count={i + 1}
               id={el.id}

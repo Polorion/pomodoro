@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 // @ts-ignore
 import { editInputText, taskEdit } from "../../store/MainReducer.ts";
 const EditTaskWindowContainer = (props) => {
+  console.log(props);
   const params = useParams();
   const editTask = props.allTask.filter((el) => el.id === params.id);
   return (

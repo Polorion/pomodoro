@@ -9,7 +9,7 @@ import MyButton from "../UI/MyButton/MyButton.tsx";
 import PomodoroRight from "./PomodoroRight/PomodoroRight.tsx";
 // @ts-ignore
 import PomodoroLeft from "./PomodoroLeft/PomodoroLeft.tsx";
-import { addMinute } from "../../store/MainReducer";
+import { pressSkipBreak } from "../../store/MainReducer";
 
 interface IBodyPomodoro {
   allTask: string[];
@@ -31,6 +31,9 @@ interface IBodyPomodoro {
   timerIsRun: boolean;
   dropDownAPI: {};
   addMinute: () => {};
+  timerPause: () => {};
+  setCountItem: (count: number, id: string) => {};
+  pressSkipBreak: () => {};
 }
 
 const BodyPomodoro = (props: IBodyPomodoro) => {
@@ -45,14 +48,17 @@ const BodyPomodoro = (props: IBodyPomodoro) => {
         activeTask={props.activeTask}
         stopTimer={props.APITimer.stopTimer}
         dropDownAPI={props.dropDownAPI}
+        setCountItem={props.setCountItem}
       />
       {props.activeTask && (
         <PomodoroRight
+          dropDownAPI={props.dropDownAPI}
           addMinute={props.addMinute}
-          taskCount={10}
+          pressSkipBreak={props.pressSkipBreak}
           viewTask={props.viewTask}
           APITimer={props.APITimer}
           timerIsRun={props.timerIsRun}
+          timerPause={props.timerPause}
         />
       )}
     </div>

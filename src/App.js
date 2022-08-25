@@ -4,10 +4,9 @@ import { Provider } from "react-redux";
 import store from "./store/Store.ts";
 import { Routes, Route, Navigate, useHistory } from "react-router-dom";
 
-// @ts-ignore
 import BodyPomodoroContainer from "./component/BodyPomodoro/BodyPomodoroContainer.tsx";
-// @ts-ignore
 import EditTaskWindowContainer from "./component/EditTaskWindow/EditTaskWindowContainer.tsx";
+import DelTaskWindowContainer from "./component/DelTaskWindow/DelTaskWindowContainer.tsx";
 
 function App() {
   const mounted = UseIsMounted();
@@ -19,6 +18,7 @@ function App() {
           <Routes>
             <Route path={"/"} element={<BodyPomodoroContainer />}>
               <Route path={"edit/:id"} element={<EditTaskWindowContainer />} />
+              <Route path={"del/:id"} element={<DelTaskWindowContainer />} />
             </Route>
           </Routes>
         </div>

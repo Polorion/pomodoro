@@ -5,7 +5,6 @@ import S from "./Intention.module.scss";
 // @ts-ignore
 import DropDown from "../DropDown/DropDown.tsx";
 import { useEffect, useRef, useState } from "react";
-import { setActiveTaskThunk } from "../../../store/MainReducer";
 interface IIntention {
   title: string;
   count: number;
@@ -16,9 +15,14 @@ interface IIntention {
   stopTimer: () => {};
   addMinute: () => {};
   dropDownAPI: {};
+  setCountItem: (count: number, id: string) => {};
+  allTask: any;
 }
 
 const Intention = (props: IIntention) => {
+  useEffect(() => {
+    props.setCountItem(props.count, props.id);
+  }, [props.allTask.length]);
   const ref = useRef(null);
   return (
     <div

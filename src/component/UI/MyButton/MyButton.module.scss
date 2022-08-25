@@ -1,11 +1,21 @@
-
 .button {
   padding: 19px 50px;
   background-color: var(--green);
   border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  color: var(--white);
+  &:hover {
+    background-color: var(--darkgreen);
+  }
 }
 .stop {
   background: transparent;
-  color: var(--gray);
-  border-color: var(--gray);
+  color: var(--red);
+  border-color: var(--red);
+
+  &:hover {
+    color: var(--white);
+    background: var(--red);
+  }
 }

@@ -10,12 +10,16 @@ const SET_INPUT_VALUE = "SET_INPUT_VALUE";
 const SET_ACTIVE_TASK = "SET_ACTIVE_TASK";
 const SET_TIMER = "SET_TIMER";
 const TIMER_IS_RUN = "TIMER_IS_RUN";
+const TIMER_IS_PAUSE = "TIMER_IS_PAUSE";
 const ADD_TOMATO = "ADD_TOMATO";
 const ADD_MINUTE = "ADD_MINUTE";
 const SUB_TOMATO = "SUB_TOMATO";
 const DELETE_TASK = "DELETE_TASK";
 const EDIT_TASK = "EDIT_TASK";
 const EDIT_INPUT_VALUE = "EDIT_INPUT_VALUE";
+const SET_ITEM_COUNT = "SET_ITEM_COUNT";
+const SET_BREAK = "SET_BREAK";
+const RESET_TIMER = "RESET_TIMER";
 
 export const addTask = (task: string, id) => {
   return {
@@ -23,9 +27,10 @@ export const addTask = (task: string, id) => {
     task: {
       task,
       id,
-      time: 6000,
+      time: 2000,
       tomato: 0,
       isBreak: false,
+      isPause: false,
     },
   };
 };
@@ -35,6 +40,31 @@ export const setTimer = (activeTask) => {
     activeTask,
   };
 };
+export const resetTimer = (task) => {
+  return {
+    type: RESET_TIMER,
+    task,
+  };
+};
+export const setBreak = (task) => {
+  return {
+    type: SET_BREAK,
+    task,
+  };
+};
+export const setCountItem = (count, idTask) => {
+  return {
+    type: SET_ITEM_COUNT,
+    count,
+    idTask,
+  };
+};
+// export const addTest = (test) => {
+//   return {
+//     type: TEST,
+//     test,
+//   };
+// };
 export const deleteTask = (taskId) => {
   return {
     type: DELETE_TASK,
@@ -47,10 +77,11 @@ export const addTomato = (task) => {
     task,
   };
 };
-export const addMinute = (task) => {
+export const addMinute = (task, time = 60000) => {
   return {
     type: ADD_MINUTE,
     task,
+    time,
   };
 };
 export const taskEdit = (task) => {
@@ -68,6 +99,13 @@ export const subTomato = (task) => {
 export const timerRun = (done) => {
   return {
     type: TIMER_IS_RUN,
+    done,
+  };
+};
+export const timerPause = (task, done) => {
+  return {
+    type: TIMER_IS_PAUSE,
+    task,
     done,
   };
 };
@@ -90,11 +128,22 @@ export const setActiveTask = (text: string) => {
   };
 };
 const initionalState = {
-  allTask: [],
+  allTask: [
+    {
+      task: "TEST",
+      id: "dsadsads",
+      time: 2000,
+      tomato: 0,
+      isBreak: false,
+      isPause: false,
+      count: "fdsfds",
+    },
+  ],
   inputValue: "",
   activeTask: "",
   timerIsRun: false,
   editInput: "",
+  test: "",
 };
 
 const MainRecucer = (
@@ -106,6 +155,63 @@ const MainRecucer = (
       return {
         ...state,
         allTask: state.allTask.concat(action.task),
+      };
+    // case TEST:
+    //   return {
+    //     ...state,
+    //     test: action.test,
+    //   };
+    case TIMER_IS_PAUSE:
+      return {
+        ...state,
+        allTask: state.allTask.map((el) => {
+          if (el.id === action.task) {
+            return {
+              ...el,
+              isPause: action.done,
+            };
+          }
+          return el;
+        }),
+      };
+    case RESET_TIMER:
+      return {
+        ...state,
+        allTask: state.allTask.map((el) => {
+          if (el.id === action.task) {
+            return {
+              ...el,
+              time: 0,
+            };
+          }
+          return el;
+        }),
+      };
+    case SET_ITEM_COUNT:
+      return {
+        ...state,
+        allTask: state.allTask.map((el) => {
+          if (el.id === action.idTask) {
+            return {
+              ...el,
+              count: action.count,
+            };
+          }
+          return el;
+        }),
+      };
+    case SET_BREAK:
+      return {
+        ...state,
+        allTask: state.allTask.map((el) => {
+          if (el.id === action.task) {
+            return {
+              ...el,
+              isBreak: !el.isBreak,
+            };
+          }
+          return el;
+        }),
       };
     case TIMER_IS_RUN:
       return {
@@ -132,7 +238,7 @@ const MainRecucer = (
           if (el.id === action.task) {
             return {
               ...el,
-              time: el.time + 60000,
+              time: el.time + action.time,
             };
           }
           return el;
@@ -155,7 +261,7 @@ const MainRecucer = (
           if (el.id === state.activeTask) {
             return {
               ...el,
-              tomato: el.tomato > 0 ? el.tomato - 1 : 0,
+              tomato: el.tomato - 1,
             };
           }
           return el;
@@ -228,6 +334,33 @@ export const setActiveTaskThunk =
 export const setTimerThunk =
   (activeTask): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {
-    console.log(1);
     dispatch(setTimer(activeTask));
+  };
+export const pressSkipBreak =
+  (task): ThunkAction<void, AppStateType, unknown, Action<string>> =>
+  (dispatch) => {
+    dispatch(timerRun(false));
+    dispatch(setBreak(task));
+    dispatch(resetTimer(task));
+    dispatch(addMinute(task, 10000));
+  };
+export const setBreakThunk =
+  (
+    task,
+    pomodor,
+    isBreak
+  ): ThunkAction<void, AppStateType, unknown, Action<string>> =>
+  (dispatch) => {
+    if (isBreak) {
+      dispatch(addMinute(task, 3000));
+    } else {
+      if (pomodor % 3 === 0 && pomodor !== 0) {
+        dispatch(addMinute(task, 5000));
+        alert("большой перерыв");
+      } else {
+        dispatch(addMinute(task, 3000));
+        alert("маленький перерыв");
+      }
+    }
+    dispatch(setBreak(task));
   };

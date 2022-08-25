@@ -7,21 +7,32 @@ import {
   addMinute,
   addTomato,
   deleteTask,
+  deleteTaskThynk,
+  pressSkipBreak,
   setActiveTaskThunk,
+  setBreakThunk,
+  setCountItem,
   setInputValue,
   setTask,
   setTimerThunk,
   subTomato,
+  timerPause,
   timerRun,
   // @ts-ignore
 } from "../../store/MainReducer.ts";
 import { useEffect, useState } from "react";
+// @ts-ignore
+import useInterval from "../../hooks/useInterval.tsx";
+// @ts-ignore
+import useSetActiveTask from "../../hooks/useSetActiveTask.tsx";
 
 interface IBodyPomodoroContainer {
   allTask: [
     {
       id: string;
       time: number;
+      tomato: number;
+      isBreak: boolean;
     }
   ];
   setTask: any;
@@ -36,39 +47,54 @@ interface IBodyPomodoroContainer {
   subTomato: (id: string) => {};
   deleteTask: () => {};
   addMinute: () => {};
+  addTest: (test: string) => {};
+  timerPause: () => {};
+  setCountItem: (count: number, id: string) => {};
+  setBreakThunk: (task: string, tomato: number, isBreak: boolean) => {};
+  pressSkipBreak: (task: string) => {};
 }
 
 const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
-  useEffect(() => {
-    props.allTask.length > 0 && props.setActiveTaskThunk(props.allTask[0].id);
-  }, [props.allTask.length]);
-
   const viewTask = props.allTask.filter((el) => {
     if (el.id === props.activeTask) {
       return el;
     }
   });
 
-  const [interval, setIntervals] = useState();
-
   const setTimer = () => {
-    props.setTimerThunk(viewTask[0].id);
+    if (viewTask[0].time > 1000) {
+      props.setTimerThunk(viewTask[0].id);
+    } else {
+      if (viewTask[0].time !== 0) {
+        props.setTimerThunk(viewTask[0].id);
+      }
+      props.timerRun(false);
+      stopTimer();
+      props.setBreakThunk(
+        viewTask[0].id,
+        viewTask[0].tomato + 1,
+        viewTask[0].isBreak
+      );
+      if (!viewTask[0].isBreak) {
+        props.addTomato(viewTask[0].id);
+      }
+    }
   };
-  const startTimer = () => {
-    props.timerRun(true);
-    // @ts-ignore
-    setIntervals(setInterval(setTimer, 1000));
-  };
-
-  const stopTimer = () => {
-    props.timerRun(false);
-    clearInterval(interval);
-  };
+  const [startTimer, stopTimer] = useInterval(
+    setTimer,
+    1000,
+    props.timerRun,
+    viewTask[0]
+  );
+  useSetActiveTask(props.allTask, props.setActiveTaskThunk);
 
   return (
     <>
       <Outlet />
       <BodyPomodoro
+        pressSkipBreak={props.pressSkipBreak}
+        setCountItem={props.setCountItem}
+        timerPause={props.timerPause}
         addMinute={props.addMinute}
         allTask={props.allTask}
         addTask={props.setTask}
@@ -95,6 +121,7 @@ const mapStateToProps = (state) => {
     inputValue: state.MainPage.inputValue,
     activeTask: state.MainPage.activeTask,
     timerIsRun: state.MainPage.timerIsRun,
+    test: state.MainPage.test,
   };
 };
 
@@ -106,6 +133,11 @@ export default connect(mapStateToProps, {
   timerRun,
   addTomato,
   subTomato,
-  deleteTask,
   addMinute,
+  timerPause,
+  setCountItem,
+  setBreakThunk,
+  deleteTask,
+
+  pressSkipBreak,
 })(BodyPomodoroContainer);
