@@ -124,7 +124,6 @@ const mapStateToProps = (state) => {
     test: state.MainPage.test,
   };
 };
-
 export default connect(mapStateToProps, {
   setTask,
   setInputValue,

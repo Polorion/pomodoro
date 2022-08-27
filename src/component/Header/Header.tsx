@@ -2,25 +2,28 @@ import * as React from "react";
 // @ts-ignore
 import S from "./Header.module.scss";
 // @ts-ignore
-import logo from "../../assets/img/logo.svg";
+import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 // @ts-ignore
-import statistics from "../../assets/img/header.svg";
+import { ReactComponent as Statistics } from "../../assets/img/header.svg";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const history = useNavigate();
+  const statClick = () => {
+    history("/statistics");
+  };
   return (
-    <div>
-      <header>
-        <div className={`container ${S.containerHeader}`}>
-          <div className={S.logo}>
-            <img src={logo} alt="" />
-            <p>pomodoro_box</p>
-          </div>
-          <div className={S.statistics}>
-            <img src={statistics} alt="" />
-            <p>Статистика</p>
-          </div>
+    <div className={S.header}>
+      <div className={`container ${S.containerHeader}`}>
+        <div className={S.logo}>
+          <Logo />
+          <p>pomodoro_box</p>
         </div>
-      </header>
+        <div onClick={statClick} className={S.statistics}>
+          <Statistics />
+          <p>Статистика</p>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,27 +1,42 @@
-header {
+.header {
+  margin-bottom: 100px;
+
   box-shadow: 0px 10px 63px rgba(0, 0, 0, 0.07);
   .containerHeader {
-  margin-bottom: 100px;
     justify-content: space-between;
     display: flex;
     align-items: center;
     .logo {
       display: flex;
       align-items: center;
-      img {
+      svg {
         margin-right: 15px;
       }
-      p{
+      p {
         color: var(--red);
       }
     }
     .statistics {
       display: flex;
       align-items: center;
-      img {
+      cursor: pointer;
+
+      &:hover {
+        p {
+          color: var(--darkred);
+        }
+        path {
+          fill: var(--darkred);
+        }
+      }
+      svg {
         margin-right: 10px;
       }
-      p{
+      path {
+        transition: all 0.5s ease;
+      }
+      p {
+        transition: all 0.5s ease;
         color: var(--red);
       }
     }

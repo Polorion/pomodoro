@@ -7,6 +7,7 @@ import { Routes, Route, Navigate, useHistory } from "react-router-dom";
 import BodyPomodoroContainer from "./component/BodyPomodoro/BodyPomodoroContainer.tsx";
 import EditTaskWindowContainer from "./component/EditTaskWindow/EditTaskWindowContainer.tsx";
 import DelTaskWindowContainer from "./component/DelTaskWindow/DelTaskWindowContainer.tsx";
+import StatisticsContainer from "./component/Statistics/StatisticsContainer.tsx";
 
 function App() {
   const mounted = UseIsMounted();
@@ -20,6 +21,8 @@ function App() {
               <Route path={"edit/:id"} element={<EditTaskWindowContainer />} />
               <Route path={"del/:id"} element={<DelTaskWindowContainer />} />
             </Route>
+            <Route path={"/statistics"} element={<StatisticsContainer />} />
+            <Route path={"/*"} element={<div>404</div>} />
           </Routes>
         </div>
       )}

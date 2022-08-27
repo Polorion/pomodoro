@@ -9,7 +9,6 @@ import MyButton from "../UI/MyButton/MyButton.tsx";
 import PomodoroRight from "./PomodoroRight/PomodoroRight.tsx";
 // @ts-ignore
 import PomodoroLeft from "./PomodoroLeft/PomodoroLeft.tsx";
-import { pressSkipBreak } from "../../store/MainReducer";
 
 interface IBodyPomodoro {
   allTask: string[];

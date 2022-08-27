@@ -20,12 +20,12 @@ const DropItem = (props: IDropItem) => {
     props.action && props.action(props.id);
     if (props.link) {
       props.link && props.title === "Редактировать"
-        ? props.link && histori(`edit/${props.id}`)
-        : histori(`del/${props.id}`);
+        ? props.link && history(`edit/${props.id}`)
+        : history(`del/${props.id}`);
     }
   };
 
-  const histori = useNavigate();
+  const history = useNavigate();
   return (
     <>
       <li onClick={liClick} className={S.item}>

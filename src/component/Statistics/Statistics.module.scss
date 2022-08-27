@@ -1,0 +1,111 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.body {
+  display: flex;
+  margin-bottom: 30px;
+  .bodyLeft {
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 30px;
+    .days {
+      padding: 25px;
+      background-color: var(--ligthwhite);
+      margin-bottom: 30px;
+      .day {
+        font-weight: 700;
+        color: var(--black);
+        font-size: 24px;
+        margin-bottom: 14px;
+      }
+    }
+    .tomato {
+      background-color: var(--ligthwhite);
+      padding: 32px 90px;
+    }
+  }
+  .bodyRight {
+    background-color: var(--ligthwhite);
+    width: 100%;
+    display: flex;
+    padding: 20px 165px 11px 56px;
+    align-items: flex-end;
+    position: relative;
+    .columnBody {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      flex-direction: column;
+      flex: 1 1 auto;
+      text-align: center;
+      margin-right: 30px;
+      .column {
+        height: 30%;
+        background-color: var(--ligthred);
+        margin-bottom: 10px;
+      }
+      .nameColumn {
+        color: var(--darkgray);
+      }
+    }
+    .time {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      z-index: 1;
+
+      top: 30px;
+      left: 0;
+      .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 45px;
+        .line {
+          width: 100%;
+          margin-right: 32px;
+          height: 1px;
+          background-color: var(--gray);
+        }
+        .min {
+          white-space: nowrap;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  .footerBlock {
+    padding: 35px 35px 25px 25px;
+    background-color: var(--ligthwhite);
+    display: flex;
+    flex: 1 1 auto;
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
+    .left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-right: auto;
+      h2 {
+        font-size: 24px;
+        color: var(--black);
+        font-size: 24px;
+      }
+      div {
+        font-weight: 400;
+        font-size: 64px;
+      }
+    }
+  }
+}

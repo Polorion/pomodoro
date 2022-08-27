@@ -10,11 +10,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 // @ts-ignore
 import MainReducer from "./MainReducer.ts";
 // @ts-ignore
+import StatisticsReducer from "./StatisticsReducer.ts";
 
 import thunk from "redux-thunk";
 
 const redusers = combineReducers({
   MainPage: MainReducer,
+  Statistics: StatisticsReducer,
 });
 
 type RootReducerType = typeof redusers;
