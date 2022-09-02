@@ -24,10 +24,10 @@ const initionalState = {
     Monday: [],
     Tuesday: [
       {
-        allTime: 3000,
+        allTime: 60000,
         cancel: 9,
-        timeOfPaused: 90002,
-        timeOfWorking: 4132000,
+        timeOfPaused: 20000,
+        timeOfWorking: 40000 ,
         tomato: 11,
       },
     ],
