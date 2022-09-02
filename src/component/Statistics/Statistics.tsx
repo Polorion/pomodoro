@@ -16,8 +16,13 @@ const Statistics = (props) => {
         setActiveTask={props.setActiveTask}
         optionSelect={props.optionSelect}
       />
-      <StatiscticsBody />
-      <StatiscticsFooter infoAllTask={props.infoAllTask} />
+      <StatiscticsBody
+        tasks={props.tasks}
+        maxTimeTask={props.maxTimeTask}
+        setActiveDay={props.setActiveDay}
+        activeDay={props.activeDay}
+      />
+      <StatiscticsFooter activeDay={props.activeDay} />
     </div>
   );
 };

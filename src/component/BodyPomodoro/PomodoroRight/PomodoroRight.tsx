@@ -6,10 +6,9 @@ import MyButton from "../../UI/MyButton/MyButton.tsx";
 // @ts-ignore
 import { ReactComponent as Add } from "../../../assets/img/add.svg";
 import fromMsToTime from "../../../utils/ConverterMsFromTime";
-import { useEffect, useState } from "react";
-import { pressSkipBreak, timerPause } from "../../../store/MainReducer";
+
 // @ts-ignore
-import useGetNameButton from "../../../hooks/useGetNameButton.tsx";
+import useGetNameButton from "../../../utils/getNameButton.tsx";
 
 interface IPomodoroRight {
   dropDownAPI: {
@@ -19,6 +18,7 @@ interface IPomodoroRight {
   taskCount: number;
   task: string;
   setTimerThunk: any;
+  addCancelThunk: any;
   viewTask: {
     id: string;
     task: string;
@@ -29,6 +29,11 @@ interface IPomodoroRight {
     startTimer: () => {};
     stopTimer: () => {};
   };
+  APITimerStop: {
+    startTimer: () => {};
+    stopTimer: () => {};
+  };
+  setCreteTask: () => {};
   timerPause: (task: string, done: boolean) => {};
   timerIsRun: boolean;
   addMinute: (id: string) => {};
@@ -36,7 +41,7 @@ interface IPomodoroRight {
 }
 
 const PomodoroRight = (props: IPomodoroRight) => {
-  const btnactions = useGetNameButton(
+  const btnActions = useGetNameButton(
     props.timerIsRun,
     props.viewTask[0].isBreak,
     props.viewTask[0].isPause,
@@ -44,7 +49,10 @@ const PomodoroRight = (props: IPomodoroRight) => {
     props.timerPause,
     props.viewTask[0].id,
     props.pressSkipBreak,
-    props.dropDownAPI
+    props.dropDownAPI,
+    props.addCancelThunk,
+    props.APITimerStop,
+    props.setCreteTask
   );
 
   const color = `${props.viewTask[0].isBreak ? S.color_green : S.color_red}  ${
@@ -52,7 +60,7 @@ const PomodoroRight = (props: IPomodoroRight) => {
   }`;
   const { s, min } = fromMsToTime(props.viewTask[0].time);
   return (
-    btnactions && (
+    btnActions && (
       <div className={S.rbody}>
         <header className={`${S.header} ${color} `}>
           <h3>{props.viewTask[0].task}</h3>
@@ -84,12 +92,13 @@ const PomodoroRight = (props: IPomodoroRight) => {
           <div>
             <div className={S.btns}>
               <MyButton
-                hendler={btnactions.l.action}
-                title={btnactions.l.title}
+                hendler={btnActions.l.action}
+                title={btnActions.l.title}
               />
               <MyButton
-                hendler={btnactions.r.action}
-                title={btnactions.r.title}
+                hendler={btnActions.r.action}
+                title={btnActions.r.title}
+                disabled={btnActions.r.disabled}
                 stop={true}
               />
             </div>

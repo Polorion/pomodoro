@@ -15,8 +15,7 @@
     transform: rotate(45deg);
     background-color: var(--white);
   }
-  li,
-  a {
+  li {
     display: flex;
     padding: 7.5px 20px 7.5px 20px;
     cursor: pointer;
@@ -29,8 +28,15 @@
     &:hover {
       background-color: var(--gray);
     }
-    img {
+    .img {
       margin-right: 10px;
+    }
+
+    &.disabled {
+      color: var(--darkgray) !important;
+      svg * {
+        fill: var(--darkgray);
+      }
     }
   }
 }

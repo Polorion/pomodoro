@@ -3,61 +3,41 @@ import * as React from "react";
 import Statistics from "./Statistics.tsx";
 import { connect } from "react-redux";
 // @ts-ignore
-import { setActiveTask } from "../../store/StatisticsReducer.ts";
-import GetDataInArray from "../../utils/GetDataInArray";
+import { setActiveDay } from "../../store/StatisticsReducer.ts";
+// @ts-ignore
+
+import useGetInfoTask from "../../hooks/useGetInfoTask.tsx";
 
 interface IStatisticsContainer {
   optionSelect: number;
-  setActiveTask: () => {};
+  setActiveDay: () => {};
+  completedTask: [{}];
+  compiltTaskTEST: {};
+  activeDay: string;
 }
 
 const StatisticsContainer = (props: IStatisticsContainer) => {
-  const taskOfWikend = [
-    {
-      title: "test",
-      tomato: 4,
-      timeOfPaused: 5,
-      timeOfWorking: 51,
-      cancel: 2,
-    },
-    {
-      title: "testq",
-      tomato: 1,
-      timeOfPaused: 0,
-      timeOfWorking: 0,
-      cancel: 0,
-    },
-    {
-      title: "testw",
-      tomato: 7,
-      timeOfPaused: 0,
-      timeOfWorking: 0,
-      cancel: 24,
-    },
-    {
-      title: "teste",
-      tomato: 23,
-      timeOfPaused: 0,
-      timeOfWorking: 0,
-      cancel: 9,
-    },
-  ];
-
-  const infoAllTask = GetDataInArray(taskOfWikend);
+  const [tasks, maxTimeTask] = useGetInfoTask(props.compiltTaskTEST);
   return (
     <div>
-      <Statistics
-        setActiveTask={props.setActiveTask}
-        optionSelect={props.optionSelect}
-        infoAllTask={infoAllTask}
-      />
+      {tasks && (
+        <Statistics
+          setActiveDay={props.setActiveDay}
+          tasks={tasks}
+          maxTimeTask={maxTimeTask}
+          activeDay={props.activeDay}
+        />
+      )}
     </div>
   );
 };
 const mapStateToProps = (state) => {
   return {
     optionSelect: state.Statistics.optionSelect,
+    completedTask: state.Statistics.completedTask,
+    compiltTaskTEST: state.Statistics.compiltTaskTEST,
+    activeDay: state.Statistics.activeDay,
   };
 };
 
-export default connect(mapStateToProps, { setActiveTask })(StatisticsContainer);
+export default connect(mapStateToProps, { setActiveDay })(StatisticsContainer);

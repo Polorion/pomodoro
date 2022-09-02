@@ -13,7 +13,9 @@ const MyButton = (props: IMyButton) => {
   return (
     <button
       onClick={props.hendler && props.hendler}
-      className={`${S.button} ${props.stop && S.stop}`}
+      className={`${S.button} ${props.stop && S.stop} ${
+        props.disabled && S.disabled
+      } `}
       disabled={props.disabled}
     >
       {props.title}

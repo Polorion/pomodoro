@@ -5,6 +5,11 @@
   cursor: pointer;
   transition: all 0.5s ease;
   color: var(--white);
+  &.disabled {
+    color: var(--ligthred);
+    border-color: var(--ligthred);
+    opacity: 0.4;
+  }
   &:hover {
     background-color: var(--darkgreen);
   }

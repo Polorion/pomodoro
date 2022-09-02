@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
-function useInterval(callback, time, action, condition) {
-  const [inter, setInter] = useState(0);
+function useInterval(
+  interval,
+  savedInterval,
+  nameInterval,
+  callback,
+  time,
+  condition,
+  action
+) {
   const ref = useRef(callback);
 
   useEffect(() => {
@@ -15,13 +22,12 @@ function useInterval(callback, time, action, condition) {
   const start = () => {
     if (condition.time > 0) {
       action && action(true);
-      // @ts-ignore
-      setInter(setInterval(tick, time));
+      interval(setInterval(tick, time), nameInterval);
     }
   };
   const stop = () => {
     action && action(false);
-    clearInterval(inter);
+    clearInterval(savedInterval);
   };
   return [start, stop];
 }

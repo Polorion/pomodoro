@@ -1,6 +1,7 @@
 import * as React from "react";
 
 const GetDataInArray = (array) => {
+  console.log(array, 22);
   const tomato = array.reduce((el, item) => {
     return el + item.tomato;
   }, 0);
@@ -16,7 +17,8 @@ const GetDataInArray = (array) => {
   const focusWork = Math.round(
     100 - (timeOfPaused * 100) / (timeOfWorking + timeOfPaused)
   );
-  return { tomato, timeOfPaused, timeOfWorking, cancel, focusWork };
+  const allTime = timeOfPaused + timeOfWorking;
+  return { tomato, timeOfPaused, timeOfWorking, cancel, focusWork, allTime };
 };
 
 export default GetDataInArray;

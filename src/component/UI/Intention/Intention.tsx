@@ -9,6 +9,7 @@ interface IIntention {
   title: string;
   count: number;
   id: string;
+  presumablyTomato: number;
   setActiveTaskThunk: any;
   coordinats: {};
   activeTask: string;
@@ -36,10 +37,14 @@ const Intention = (props: IIntention) => {
         }}
         className={S.left}
       >
-        <div className={S.count}>{props.count}</div>
+        <div className={S.count}>{props.presumablyTomato}</div>
         <div className={S.title}>{props.title}</div>
       </div>
-      <DropDown dropDownAPI={props.dropDownAPI} id={props.id} />
+      <DropDown
+        dropDownAPI={props.dropDownAPI}
+        id={props.id}
+        presumablyTomato={props.presumablyTomato}
+      />
     </div>
   );
 };

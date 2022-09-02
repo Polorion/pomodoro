@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import DropDownList from "./DropDownList/DropDownList.tsx";
 
 interface IDropDown {
+  presumablyTomato: number;
   dropDownAPI: {};
   id: string;
 }
@@ -35,6 +36,7 @@ const DropDown = (props: IDropDown) => {
       <img src={drop} alt="" />
       {open && (
         <DropDownList
+          presumablyTomato={props.presumablyTomato}
           coordinat={coordinat}
           dropDownAPI={props.dropDownAPI}
           id={props.id}

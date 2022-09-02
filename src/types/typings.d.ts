@@ -7,3 +7,5 @@ declare module "*.jpeg";
 declare module "*.png";
 declare module "*.jpg";
 declare module "*.jsx";
+declare module "*.tsx";
+declare module "*.ts";

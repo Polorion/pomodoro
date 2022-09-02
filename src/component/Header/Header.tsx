@@ -7,10 +7,11 @@ import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import { ReactComponent as Statistics } from "../../assets/img/header.svg";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
   const history = useNavigate();
   const statClick = () => {
     history("/statistics");
+    props.stopAllInterval();
   };
   return (
     <div className={S.header}>

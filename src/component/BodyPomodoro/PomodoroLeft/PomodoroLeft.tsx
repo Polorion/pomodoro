@@ -8,13 +8,17 @@ import S from "./PomodoroLeft.module.scss";
 // @ts-ignore
 import Intention from "../../UI/Intention/Intention.tsx";
 import GeneratorRandomString from "../../../utils/GeneratorRandomString";
-import { setActiveTaskThunk } from "../../../store/MainReducer";
 
 interface IPomodoroLeft {
+  convertTomatoFromTime: {
+    h: number;
+    min: number;
+  };
   allTask: [
     {
       task: string;
       id: string;
+      presumablyTomato: number;
     }
   ];
   addTask: any;
@@ -70,7 +74,7 @@ const PomodoroLeft = (props: IPomodoroLeft) => {
               setCountItem={props.setCountItem}
               key={el.task}
               title={el.task}
-              count={i + 1}
+              presumablyTomato={el.presumablyTomato}
               id={el.id}
               setActiveTaskThunk={props.setActiveTaskThunk}
               activeTask={props.activeTask}
@@ -79,6 +83,11 @@ const PomodoroLeft = (props: IPomodoroLeft) => {
             />
           ))}
         </ul>
+        <div className={S.tomatToTime}>
+          {props.convertTomatoFromTime.h > 0 &&
+            props.convertTomatoFromTime.h + "час"}{" "}
+          {props.convertTomatoFromTime.min} мин
+        </div>
       </form>
     </div>
   );

@@ -9,8 +9,11 @@ import MyButton from "../UI/MyButton/MyButton.tsx";
 import PomodoroRight from "./PomodoroRight/PomodoroRight.tsx";
 // @ts-ignore
 import PomodoroLeft from "./PomodoroLeft/PomodoroLeft.tsx";
+import { addCancelThunk } from "../../store/MainReducer";
+import getNowDay from "../../utils/getNowDay";
 
 interface IBodyPomodoro {
+  convertTomatoFromTime: {};
   allTask: string[];
   setTask: any;
   addTask: void;
@@ -19,6 +22,7 @@ interface IBodyPomodoro {
   inputValue: string;
   activeTask: string;
   setTimerThunk: any;
+  addCancelThunk: any;
   viewTask: {
     id: string;
     task: string;
@@ -27,9 +31,14 @@ interface IBodyPomodoro {
     startTimer: () => {};
     stopTimer: () => {};
   };
+  APITimerStop: {
+    startTimer: () => {};
+    stopTimer: () => {};
+  };
   timerIsRun: boolean;
   dropDownAPI: {};
   addMinute: () => {};
+  setCreteTask: () => {};
   timerPause: () => {};
   setCountItem: (count: number, id: string) => {};
   pressSkipBreak: () => {};
@@ -48,14 +57,18 @@ const BodyPomodoro = (props: IBodyPomodoro) => {
         stopTimer={props.APITimer.stopTimer}
         dropDownAPI={props.dropDownAPI}
         setCountItem={props.setCountItem}
+        convertTomatoFromTime={props.convertTomatoFromTime}
       />
       {props.activeTask && (
         <PomodoroRight
+          addCancelThunk={props.addCancelThunk}
+          setCreteTask={props.setCreteTask}
           dropDownAPI={props.dropDownAPI}
           addMinute={props.addMinute}
           pressSkipBreak={props.pressSkipBreak}
           viewTask={props.viewTask}
           APITimer={props.APITimer}
+          APITimerStop={props.APITimerStop}
           timerIsRun={props.timerIsRun}
           timerPause={props.timerPause}
         />

@@ -19,7 +19,13 @@ const EDIT_TASK = "EDIT_TASK";
 const EDIT_INPUT_VALUE = "EDIT_INPUT_VALUE";
 const SET_ITEM_COUNT = "SET_ITEM_COUNT";
 const SET_BREAK = "SET_BREAK";
+const ADD_SECOND_WORK = "ADD_SECOND_WORK";
 const RESET_TIMER = "RESET_TIMER";
+const ADD_SECOND_PAUSED = "ADD_SECOND_PAUSED";
+const ADD_CANCEL = "ADD_CANCEL";
+const SET_TIMER_INTERVAL = "SET_TIMER_INTERVAL";
+const SET_PRE_TOMATO = "SET_PRE_TOMATO";
+const SET_PRE_TOMATO_TIME = "SET_PRE_TOMATO_TIME";
 
 export const addTask = (task: string, id) => {
   return {
@@ -31,6 +37,10 @@ export const addTask = (task: string, id) => {
       tomato: 0,
       isBreak: false,
       isPause: false,
+      allTimeWork: 0,
+      timePaused: 0,
+      cancel: 0,
+      presumablyTomato: 1,
     },
   };
 };
@@ -38,6 +48,32 @@ export const setTimer = (activeTask) => {
   return {
     type: SET_TIMER,
     activeTask,
+  };
+};
+export const setPreTimeTomato = (obj) => {
+  return {
+    type: SET_PRE_TOMATO_TIME,
+    obj,
+  };
+};
+export const setPreTomato = (id, prop) => {
+  return {
+    type: SET_PRE_TOMATO,
+    prop,
+    id,
+  };
+};
+export const setTimerInterval = (inverval, name) => {
+  return {
+    type: SET_TIMER_INTERVAL,
+    inverval,
+    name,
+  };
+};
+export const addCancel = (task) => {
+  return {
+    type: ADD_CANCEL,
+    task,
   };
 };
 export const resetTimer = (task) => {
@@ -59,12 +95,7 @@ export const setCountItem = (count, idTask) => {
     idTask,
   };
 };
-// export const addTest = (test) => {
-//   return {
-//     type: TEST,
-//     test,
-//   };
-// };
+
 export const deleteTask = (taskId) => {
   return {
     type: DELETE_TASK,
@@ -115,6 +146,18 @@ export const addInputValue = (text: string) => {
     text,
   };
 };
+export const addSecondWork = (task) => {
+  return {
+    type: ADD_SECOND_WORK,
+    task,
+  };
+};
+export const addSecondPaused = (task) => {
+  return {
+    type: ADD_SECOND_PAUSED,
+    task,
+  };
+};
 export const editInputText = (text: string) => {
   return {
     type: EDIT_INPUT_VALUE,
@@ -132,18 +175,27 @@ const initionalState = {
     {
       task: "TEST",
       id: "dsadsads",
-      time: 2000,
+      time: 9000,
       tomato: 0,
       isBreak: false,
       isPause: false,
       count: "fdsfds",
+      allTimeWork: 0,
+      timePaused: 0,
+      cancel: 0,
+      presumablyTomato: 1,
     },
   ],
   inputValue: "",
   activeTask: "",
   timerIsRun: false,
   editInput: "",
-  test: "",
+  intervalPaused: "",
+  intervalGo: "",
+  convertTomatoFromTime: {
+    h: 0,
+    min: 0,
+  },
 };
 
 const MainRecucer = (
@@ -156,11 +208,6 @@ const MainRecucer = (
         ...state,
         allTask: state.allTask.concat(action.task),
       };
-    // case TEST:
-    //   return {
-    //     ...state,
-    //     test: action.test,
-    //   };
     case TIMER_IS_PAUSE:
       return {
         ...state,
@@ -208,6 +255,32 @@ const MainRecucer = (
             return {
               ...el,
               isBreak: !el.isBreak,
+            };
+          }
+          return el;
+        }),
+      };
+    case SET_TIMER_INTERVAL:
+      return {
+        ...state,
+        [action.name]: action.inverval,
+      };
+    case SET_PRE_TOMATO_TIME:
+      return {
+        ...state,
+        convertTomatoFromTime: {
+          h: action.obj.h,
+          min: action.obj.min,
+        },
+      };
+    case ADD_CANCEL:
+      return {
+        ...state,
+        allTask: state.allTask.map((el) => {
+          if (el.id === action.task) {
+            return {
+              ...el,
+              cancel: el.cancel + 1,
             };
           }
           return el;
@@ -280,6 +353,52 @@ const MainRecucer = (
           return el;
         }),
       };
+    case SET_PRE_TOMATO:
+      return {
+        ...state,
+        allTask: state.allTask.map((el) => {
+          if (el.id === action.id) {
+            if (action.prop === "add") {
+              return {
+                ...el,
+                presumablyTomato: el.presumablyTomato + 1,
+              };
+            } else {
+              return {
+                ...el,
+                presumablyTomato: el.presumablyTomato - 1,
+              };
+            }
+          }
+          return el;
+        }),
+      };
+    case ADD_SECOND_WORK:
+      return {
+        ...state,
+        allTask: state.allTask.map((el) => {
+          if (el.id === state.activeTask) {
+            return {
+              ...el,
+              allTimeWork: el.allTimeWork + 1000,
+            };
+          }
+          return el;
+        }),
+      };
+    case ADD_SECOND_PAUSED:
+      return {
+        ...state,
+        allTask: state.allTask.map((el) => {
+          if (el.id === state.activeTask) {
+            return {
+              ...el,
+              timePaused: el.timePaused + 1000,
+            };
+          }
+          return el;
+        }),
+      };
     case SET_INPUT_VALUE:
       return {
         ...state,
@@ -331,9 +450,18 @@ export const setActiveTaskThunk =
   (dispatch) => {
     dispatch(setActiveTask(text));
   };
+export const addCancelThunk =
+  (task): ThunkAction<void, AppStateType, unknown, Action<string>> =>
+  (dispatch) => {
+    dispatch(addCancel(task));
+    dispatch(timerRun(false));
+    dispatch(resetTimer(task));
+    dispatch(addMinute(task, 10000));
+  };
 export const setTimerThunk =
   (activeTask): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {
+    dispatch(addSecondWork(activeTask));
     dispatch(setTimer(activeTask));
   };
 export const pressSkipBreak =

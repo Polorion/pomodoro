@@ -1,36 +1,32 @@
 import * as React from "react";
 // @ts-ignore
 import S from "../../DropDown.module.scss";
-import { useEffect, useRef } from "react";
 // @ts-ignore
 import ReactDOM from "react-dom";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 interface IDropItem {
+  disable: boolean;
   img: string;
   title: string;
-  action: (id: string) => {};
+  action: () => {};
   id: string;
+  upOrDown: string;
   link: string;
 }
 
 const DropItem = (props: IDropItem) => {
   const liClick = () => {
-    props.action && props.action(props.id);
-    if (props.link) {
-      props.link && props.title === "Редактировать"
-        ? props.link && history(`edit/${props.id}`)
-        : history(`del/${props.id}`);
-    }
+    !props.disable && props.action();
   };
 
-  const history = useNavigate();
   return (
     <>
-      <li onClick={liClick} className={S.item}>
+      <li
+        onClick={liClick}
+        className={`${S.item} ${props.disable && S.disabled}`}
+      >
         <div className={S.img}>
-          <img src={props.img} alt="" />
+          <props.img />
         </div>
         <div className={S.title}>{props.title}</div>
       </li>

@@ -8,66 +8,34 @@ import { ReactComponent as Clock } from "../../../assets/img/clock.svg";
 // @ts-ignore
 import { ReactComponent as Cancel } from "../../../assets/img/cancel.svg";
 // @ts-ignore
-import InfoBlock from "./InfoBlock/InfoBlock.tsx";
-import GeneratorRandomString from "../../../utils/GeneratorRandomString.jsx";
+import FocusBlock from "./FocusBlock/FocusBlock.tsx";
+// @ts-ignore
+import PauseBlock from "./PauseBlock/PauseBlock.tsx";
+// @ts-ignore
+import CancelBlock from "./CancelBlock/CancelBlock.tsx";
 
 const StatiscticsFooter = (props) => {
-  const test = [
-    {
-      title: "Фокус",
-      info: "30%",
-      logo: Radius,
-    },
-    {
-      title: "Время на паузе",
-      info: "30%",
-      logo: Clock,
-    },
-    {
-      title: "Остановки",
-      info: "30%",
-      logo: Cancel,
-    },
-  ];
+  const isActive = !!props.activeDay;
   return (
     <div className={S.footer}>
-      {/*{test.map((el) => {*/}
-      {/*  return (*/}
-      {/*    <InfoBlock*/}
-      {/*      key={GeneratorRandomString()}*/}
-      {/*      title={el.title}*/}
-      {/*      info={el.info}*/}
-      {/*      logo={el.logo}*/}
-      {/*    />*/}
-      {/*  );*/}
-      {/*})}*/}
-      <div className={S.footerBlock}>
-        <div className={S.left}>
-          <h2>Фокус</h2>
-          <div>{props.infoAllTask.tomato}</div>
-        </div>
-        <div className={S.right}>
-          <Radius />
-        </div>
-      </div>
-      <div className={S.footerBlock}>
-        <div className={S.left}>
-          <h2>"Время на паузе"</h2>
-          <div>{props.infoAllTask.timeOfWorking}</div>
-        </div>
-        <div className={S.right}>
-          <Clock />
-        </div>
-      </div>
-      <div className={S.footerBlock}>
-        <div className={S.left}>
-          <h2>Остановки</h2>
-          <div>{props.infoAllTask.cancel}</div>
-        </div>
-        <div className={S.right}>
-          <Cancel />
-        </div>
-      </div>
+      <FocusBlock
+        title={"Фокус"}
+        info={props.activeDay.focusWork}
+        logo={Radius}
+        isActive={isActive}
+      />{" "}
+      <PauseBlock
+        title={"Время на паузе"}
+        info={props.activeDay.timeOfPaused}
+        logo={Clock}
+        isActive={isActive}
+      />{" "}
+      <CancelBlock
+        title={"Остановки"}
+        info={props.activeDay.cancel}
+        logo={Cancel}
+        isActive={isActive}
+      />
     </div>
   );
 };
