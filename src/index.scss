@@ -1,3 +1,13 @@
+.day {
+  background-color: var(--white);
+}
+.night {
+  background-color: var(--black);
+}
+.App {
+  transition: all 1s ease;
+}
+
 :root {
   --ligthred: #ea8979;
   --red: #dc3e22;

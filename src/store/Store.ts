@@ -1,15 +1,13 @@
-// @ts-ignore
 import {
   applyMiddleware,
   combineReducers,
   legacy_createStore as createStore,
-  // @ts-ignore
 } from "redux";
-// @ts-ignore
+
 import { composeWithDevTools } from "redux-devtools-extension";
-// @ts-ignore
+
 import MainReducer from "./MainReducer.ts";
-// @ts-ignore
+
 import StatisticsReducer from "./StatisticsReducer.ts";
 
 import thunk from "redux-thunk";
@@ -26,5 +24,5 @@ const store = createStore(
   redusers,
   composeWithDevTools(applyMiddleware(thunk))
 );
-// @ts-ignore
+
 export default store;

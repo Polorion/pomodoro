@@ -9,3 +9,5 @@ declare module "*.jpg";
 declare module "*.jsx";
 declare module "*.tsx";
 declare module "*.ts";
+declare module "*.svg";
+declare module "*.mp3";

@@ -1,11 +1,10 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./Intention.module.scss";
 
-// @ts-ignore
 import DropDown from "../DropDown/DropDown.tsx";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 interface IIntention {
+  nightOrDay: boolean;
   title: string;
   count: number;
   id: string;
@@ -37,8 +36,12 @@ const Intention = (props: IIntention) => {
         }}
         className={S.left}
       >
-        <div className={S.count}>{props.presumablyTomato}</div>
-        <div className={S.title}>{props.title}</div>
+        <div className={`${S.count} ${props.nightOrDay ? S.day : S.night}`}>
+          {props.presumablyTomato}
+        </div>
+        <div className={`${S.title} ${props.nightOrDay ? S.day : S.night}`}>
+          {props.title}
+        </div>
       </div>
       <DropDown
         dropDownAPI={props.dropDownAPI}

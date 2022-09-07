@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import GetDataInArray from "../utils/GetDataInArray";
 import fromMsToTime from "../utils/ConverterMsFromTime";
 
-const useGetInfoTask = (obj) => {
+const useGetInfoTask = (obj: {}) => {
   const [data, setData] = useState();
   const [max, setMax] = useState();
 
@@ -32,8 +32,9 @@ const useGetInfoTask = (obj) => {
         },
       };
     });
-    let max = dayData.reduce((acc, curr) =>
-      acc.allTime.allSec > curr.allTime.allSec ? acc : curr
+    let max = dayData.reduce(
+      (acc: any, curr: { allTime: { allSec: number } }) =>
+        acc.allTime.allSec > curr.allTime.allSec ? acc : curr
     );
     setData(dayData);
     setMax(max);

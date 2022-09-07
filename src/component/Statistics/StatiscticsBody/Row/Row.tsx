@@ -1,8 +1,14 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./../../Statistics.module.scss";
 
-const Row = (props) => {
+interface iRow {
+  time: {
+    h: number;
+    min: number;
+  };
+}
+
+const Row = (props: iRow) => {
   return (
     <div className={S.row}>
       <div className={S.line}></div>

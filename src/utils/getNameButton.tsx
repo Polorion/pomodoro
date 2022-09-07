@@ -1,17 +1,22 @@
 import * as React from "react";
 
 const getNameButton = (
-  timerIsRun,
-  isBreak,
-  isPause,
-  APITimer,
-  timerPause,
-  task,
-  pressSkipBreak,
-  dropDownAPI,
-  addCancelThunk,
-  APITimerStop,
-  setCreteTask
+  timerIsRun: any,
+  isBreak: any,
+  isPause: any,
+  APITimer: any,
+  timerPause: any,
+  task: any,
+  pressSkipBreak: any,
+  dropDownAPI: any,
+  addCancelThunk: any,
+  APITimerStop: any,
+  setCreteTask: any,
+  settings: {
+    workTime: number;
+    breakTime: number;
+    bigBreakTime: number;
+  }
 ) => {
   const startTimer = () => {
     APITimer.startTimer();
@@ -27,7 +32,7 @@ const getNameButton = (
   const skipBreak = () => {
     APITimerStop.stopTimerPaused();
     APITimer.stopTimer();
-    pressSkipBreak(task);
+    pressSkipBreak(task, settings.workTime);
     timerPause(task, false);
   };
   const complit = () => {
@@ -36,7 +41,7 @@ const getNameButton = (
     dropDownAPI.deleteTask(task);
   };
   const stop = () => {
-    addCancelThunk(task);
+    addCancelThunk(task, settings.workTime);
     APITimer.stopTimer();
   };
   const tremconst = () => {

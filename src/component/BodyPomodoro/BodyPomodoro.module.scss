@@ -1,3 +1,10 @@
 .containerPomodoro {
   display: flex;
+  transition: all 1s ease;
+  &.day {
+    background-color: var(--white);
+  }
+  &.night {
+    background-color: var(--black);
+  }
 }

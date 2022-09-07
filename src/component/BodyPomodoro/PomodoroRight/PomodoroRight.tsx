@@ -1,16 +1,13 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./PomodoroRight.module.scss";
-// @ts-ignore
 import MyButton from "../../UI/MyButton/MyButton.tsx";
-// @ts-ignore
 import { ReactComponent as Add } from "../../../assets/img/add.svg";
 import fromMsToTime from "../../../utils/ConverterMsFromTime";
 
-// @ts-ignore
 import useGetNameButton from "../../../utils/getNameButton.tsx";
 
 interface IPomodoroRight {
+  nightOrDay: boolean;
   dropDownAPI: {
     deleteTask: (i: string) => {};
   };
@@ -19,12 +16,17 @@ interface IPomodoroRight {
   task: string;
   setTimerThunk: any;
   addCancelThunk: any;
-  viewTask: {
-    id: string;
-    task: string;
-    time: number;
-    isPause: boolean;
-  };
+  viewTask: [
+    {
+      id: string;
+      task: string;
+      time: number;
+      isPause: boolean;
+      isBreak: boolean;
+      tomato: number;
+      count: number;
+    }
+  ];
   APITimer: {
     startTimer: () => {};
     stopTimer: () => {};
@@ -38,6 +40,11 @@ interface IPomodoroRight {
   timerIsRun: boolean;
   addMinute: (id: string) => {};
   pressSkipBreak: (id: string) => {};
+  settings: {
+    workTime: number;
+    breakTime: number;
+    bigBreakTime: number;
+  };
 }
 
 const PomodoroRight = (props: IPomodoroRight) => {
@@ -52,7 +59,8 @@ const PomodoroRight = (props: IPomodoroRight) => {
     props.dropDownAPI,
     props.addCancelThunk,
     props.APITimerStop,
-    props.setCreteTask
+    props.setCreteTask,
+    props.settings
   );
 
   const color = `${props.viewTask[0].isBreak ? S.color_green : S.color_red}  ${
@@ -61,7 +69,7 @@ const PomodoroRight = (props: IPomodoroRight) => {
   const { s, min } = fromMsToTime(props.viewTask[0].time);
   return (
     btnActions && (
-      <div className={S.rbody}>
+      <div className={`${S.rbody}  ${props.nightOrDay ? S.day : S.night}`}>
         <header className={`${S.header} ${color} `}>
           <h3>{props.viewTask[0].task}</h3>
           <div>

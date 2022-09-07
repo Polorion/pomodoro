@@ -1,15 +1,12 @@
 import * as React from "react";
-// @ts-ignore
 import LiItem from "../../UI/LiItem/LiItem.tsx";
-// @ts-ignore
 import MyButton from "../../UI/MyButton/MyButton.tsx";
-// @ts-ignore
 import S from "./PomodoroLeft.module.scss";
-// @ts-ignore
 import Intention from "../../UI/Intention/Intention.tsx";
 import GeneratorRandomString from "../../../utils/GeneratorRandomString";
 
 interface IPomodoroLeft {
+  nightOrDay: boolean;
   convertTomatoFromTime: {
     h: number;
     min: number;
@@ -29,13 +26,22 @@ interface IPomodoroLeft {
   stopTimer: () => {};
   dropDownAPI: {};
   setCountItem: (count: number, id: string) => {};
+  settings: {
+    workTime: number;
+    breakTime: number;
+    bigBreakTime: number;
+  };
 }
 
 const PomodoroLeft = (props: IPomodoroLeft) => {
-  const addTask = (e) => {
+  const addTask = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (props.inputValue) {
-      props.addTask(props.inputValue, GeneratorRandomString());
+      props.addTask(
+        props.inputValue,
+        GeneratorRandomString(),
+        props.settings.workTime
+      );
     }
   };
   const allLi = [
@@ -48,14 +54,19 @@ const PomodoroLeft = (props: IPomodoroLeft) => {
   return (
     <div className={S.body}>
       <div>
-        <h3>Ура! Теперь можно начать работать:</h3>
+        <h3 className={` ${props.nightOrDay ? S.day : S.night}`}>
+          Ура! Теперь можно начать работать:
+        </h3>
         <ul className={S.listTop}>
           {allLi.map((el) => (
-            <LiItem key={el} title={el} />
+            <LiItem key={el} title={el} nightOrDay={props.nightOrDay} />
           ))}
         </ul>
       </div>
-      <form onSubmit={addTask} className={S.form}>
+      <form
+        onSubmit={addTask}
+        className={`${S.form} ${props.nightOrDay ? S.day : S.night}`}
+      >
         <input
           onInput={(e) => {
             props.setInputValue(e.currentTarget.value);
@@ -70,6 +81,7 @@ const PomodoroLeft = (props: IPomodoroLeft) => {
         <ul>
           {props.allTask.map((el, i) => (
             <Intention
+              nightOrDay={props.nightOrDay}
               allTask={props.allTask}
               setCountItem={props.setCountItem}
               key={el.task}

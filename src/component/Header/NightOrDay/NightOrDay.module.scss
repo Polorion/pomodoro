@@ -1,0 +1,25 @@
+.body {
+  width: 60px;
+  height: 30px;
+  background-color: var(--darkgreen);
+  border-radius: 100px;
+  margin-right: 40px;
+  position: relative;
+  .circle {
+    height: 20px;
+    width: 20px;
+    border-radius: 100px;
+    position: absolute;
+    top: 4.5px;
+    transition: all 1s ease;
+    left: 5px;
+    &.day {
+      transform: translateX(30px);
+      background-color: var(--ligthwhite);
+    }
+    &.night {
+      transform: translateX(0px);
+      background-color: var(--black);
+    }
+  }
+}

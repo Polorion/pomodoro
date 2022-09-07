@@ -1,11 +1,9 @@
-// @ts-ignore
 import { ThunkAction } from "redux-thunk";
-// @ts-ignore
 import { Action } from "redux";
 import { AppStateType } from "./Store";
-// @ts-ignore
 
 const SET_TASK = "SET_TASK";
+const SET_DAY_OR_NIGHT = "SET_DAY_OR_NIGHT";
 const SET_INPUT_VALUE = "SET_INPUT_VALUE";
 const SET_ACTIVE_TASK = "SET_ACTIVE_TASK";
 const SET_TIMER = "SET_TIMER";
@@ -27,13 +25,13 @@ const SET_TIMER_INTERVAL = "SET_TIMER_INTERVAL";
 const SET_PRE_TOMATO = "SET_PRE_TOMATO";
 const SET_PRE_TOMATO_TIME = "SET_PRE_TOMATO_TIME";
 
-export const addTask = (task: string, id) => {
+export const addTask = (task: string, id: string, time: number) => {
   return {
     type: SET_TASK,
     task: {
       task,
       id,
-      time: 2000,
+      time: time,
       tomato: 0,
       isBreak: false,
       isPause: false,
@@ -44,51 +42,56 @@ export const addTask = (task: string, id) => {
     },
   };
 };
-export const setTimer = (activeTask) => {
+export const setTimer = (activeTask: string) => {
   return {
     type: SET_TIMER,
     activeTask,
   };
 };
-export const setPreTimeTomato = (obj) => {
+export const setNightOrDay = () => {
+  return {
+    type: SET_DAY_OR_NIGHT,
+  };
+};
+export const setPreTimeTomato = (obj: { h: number; min: number }) => {
   return {
     type: SET_PRE_TOMATO_TIME,
     obj,
   };
 };
-export const setPreTomato = (id, prop) => {
+export const setPreTomato = (id: string, prop: string) => {
   return {
     type: SET_PRE_TOMATO,
     prop,
     id,
   };
 };
-export const setTimerInterval = (inverval, name) => {
+export const setTimerInterval = (inverval: string, name: string) => {
   return {
     type: SET_TIMER_INTERVAL,
     inverval,
     name,
   };
 };
-export const addCancel = (task) => {
+export const addCancel = (task: string) => {
   return {
     type: ADD_CANCEL,
     task,
   };
 };
-export const resetTimer = (task) => {
+export const resetTimer = (task: string) => {
   return {
     type: RESET_TIMER,
     task,
   };
 };
-export const setBreak = (task) => {
+export const setBreak = (task: string) => {
   return {
     type: SET_BREAK,
     task,
   };
 };
-export const setCountItem = (count, idTask) => {
+export const setCountItem = (count: number, idTask: string) => {
   return {
     type: SET_ITEM_COUNT,
     count,
@@ -96,44 +99,44 @@ export const setCountItem = (count, idTask) => {
   };
 };
 
-export const deleteTask = (taskId) => {
+export const deleteTask = (taskId: string) => {
   return {
     type: DELETE_TASK,
     taskId,
   };
 };
-export const addTomato = (task) => {
+export const addTomato = (task: string) => {
   return {
     type: ADD_TOMATO,
     task,
   };
 };
-export const addMinute = (task, time = 60000) => {
+export const addMinute = (task: string, time = 60000) => {
   return {
     type: ADD_MINUTE,
     task,
     time,
   };
 };
-export const taskEdit = (task) => {
+export const taskEdit = (task: string) => {
   return {
     type: EDIT_TASK,
     task,
   };
 };
-export const subTomato = (task) => {
+export const subTomato = (task: string) => {
   return {
     type: SUB_TOMATO,
     task,
   };
 };
-export const timerRun = (done) => {
+export const timerRun = (done: boolean) => {
   return {
     type: TIMER_IS_RUN,
     done,
   };
 };
-export const timerPause = (task, done) => {
+export const timerPause = (task: string, done: boolean) => {
   return {
     type: TIMER_IS_PAUSE,
     task,
@@ -146,13 +149,13 @@ export const addInputValue = (text: string) => {
     text,
   };
 };
-export const addSecondWork = (task) => {
+export const addSecondWork = (task: string) => {
   return {
     type: ADD_SECOND_WORK,
     task,
   };
 };
-export const addSecondPaused = (task) => {
+export const addSecondPaused = (task: string) => {
   return {
     type: ADD_SECOND_PAUSED,
     task,
@@ -175,7 +178,7 @@ const initionalState = {
     {
       task: "TEST",
       id: "dsadsads",
-      time: 9000,
+      time: 1000,
       tomato: 0,
       isBreak: false,
       isPause: false,
@@ -192,6 +195,7 @@ const initionalState = {
   editInput: "",
   intervalPaused: "",
   intervalGo: "",
+  nightOrDay: false,
   convertTomatoFromTime: {
     h: 0,
     min: 0,
@@ -207,6 +211,11 @@ const MainRecucer = (
       return {
         ...state,
         allTask: state.allTask.concat(action.task),
+      };
+    case SET_DAY_OR_NIGHT:
+      return {
+        ...state,
+        nightOrDay: !state.nightOrDay,
       };
     case TIMER_IS_PAUSE:
       return {
@@ -435,60 +444,52 @@ const MainRecucer = (
 export default MainRecucer;
 
 export const setTask =
-  (task, id): ThunkAction<void, AppStateType, unknown, Action<string>> =>
+  (
+    task: string,
+    id: string,
+    time: number
+  ): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {
-    dispatch(addTask(task, id));
+    dispatch(addTask(task, id, time));
     dispatch(addInputValue(""));
   };
 export const setInputValue =
-  (text): ThunkAction<void, AppStateType, unknown, Action<string>> =>
+  (text: string): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {
     dispatch(addInputValue(text));
   };
 export const setActiveTaskThunk =
-  (text): ThunkAction<void, AppStateType, unknown, Action<string>> =>
+  (text: string): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {
     dispatch(setActiveTask(text));
   };
 export const addCancelThunk =
-  (task): ThunkAction<void, AppStateType, unknown, Action<string>> =>
+  (
+    task: string,
+    time: number
+  ): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {
     dispatch(addCancel(task));
     dispatch(timerRun(false));
     dispatch(resetTimer(task));
-    dispatch(addMinute(task, 10000));
+    dispatch(addMinute(task, time));
   };
 export const setTimerThunk =
-  (activeTask): ThunkAction<void, AppStateType, unknown, Action<string>> =>
+  (
+    activeTask: string
+  ): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {
     dispatch(addSecondWork(activeTask));
     dispatch(setTimer(activeTask));
   };
 export const pressSkipBreak =
-  (task): ThunkAction<void, AppStateType, unknown, Action<string>> =>
+  (
+    task: string,
+    time: number
+  ): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {
     dispatch(timerRun(false));
     dispatch(setBreak(task));
     dispatch(resetTimer(task));
-    dispatch(addMinute(task, 10000));
-  };
-export const setBreakThunk =
-  (
-    task,
-    pomodor,
-    isBreak
-  ): ThunkAction<void, AppStateType, unknown, Action<string>> =>
-  (dispatch) => {
-    if (isBreak) {
-      dispatch(addMinute(task, 3000));
-    } else {
-      if (pomodor % 3 === 0 && pomodor !== 0) {
-        dispatch(addMinute(task, 5000));
-        alert("большой перерыв");
-      } else {
-        dispatch(addMinute(task, 3000));
-        alert("маленький перерыв");
-      }
-    }
-    dispatch(setBreak(task));
+    dispatch(addMinute(task, time));
   };

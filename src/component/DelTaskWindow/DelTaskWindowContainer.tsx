@@ -1,11 +1,15 @@
 import * as React from "react";
-// @ts-ignore
 import DelTaskWindow from "./DelTaskWindow.tsx";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-// @ts-ignore
 import { deleteTask } from "../../store/MainReducer.ts";
-const DelTaskWindowContainer = (props) => {
+
+interface IDelTaskWindowContainer {
+  allTask: [{ id: string }];
+  deleteTask: () => {};
+}
+
+const DelTaskWindowContainer = (props: IDelTaskWindowContainer) => {
   const params = useParams();
   const editTask = props.allTask.filter((el) => el.id === params.id);
   return (
@@ -17,7 +21,7 @@ const DelTaskWindowContainer = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
   return {
     allTask: state.MainPage.allTask,
   };

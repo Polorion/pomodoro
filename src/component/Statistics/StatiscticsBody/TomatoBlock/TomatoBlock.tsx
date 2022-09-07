@@ -1,12 +1,15 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./../../Statistics.module.scss";
-// @ts-ignore
 import { ReactComponent as Tomato } from "../../../../assets/img/tomato.svg";
-// @ts-ignore
 import { ReactComponent as ActiveTomato } from "../../../../assets/img/logo.svg";
 
-const TomatoBlock = (props) => {
+interface ITomatoBlock {
+  activeDay: {
+    tomato: number;
+  };
+}
+
+const TomatoBlock = (props: ITomatoBlock) => {
   return (
     <div className={S.tomato}>
       {!props.activeDay ? (

@@ -1,19 +1,10 @@
 import * as React from "react";
-// @ts-ignore
 import DropItem from "./DropItem/DropItem.tsx";
-// @ts-ignore
-import drop from "../../../../assets/img/dropDown.svg";
-// @ts-ignore
 import ReactDOM from "react-dom";
-// @ts-ignore
 import S from "../DropDown.module.scss";
 import { useEffect, useRef } from "react";
 
 import GeneratorRandomString from "../../../../utils/GeneratorRandomString";
-import { addTomato, subTomato } from "../../../../store/MainReducer";
-// @ts-ignore
-import Del from "../../../../HOC/dropdown/Del.tsx";
-// @ts-ignore
 import UseGetDropDownLiData from "../../../../hooks/useGetDropDownLiData.tsx";
 interface IDropDownList {
   presumablyTomato: number;
@@ -47,17 +38,19 @@ const DropDownList = (props: IDropDownList) => {
   if (!node) return null;
   return ReactDOM.createPortal(
     <ul className={S.dropList} ref={ref}>
-      {liItem.map((el) => {
-        return (
-          <DropItem
-            key={GeneratorRandomString()}
-            img={el.img}
-            title={el.title}
-            action={el.action}
-            disable={el.disable}
-          />
-        );
-      })}
+      {liItem.map(
+        (el: { img: any; title: string; action: string; disable: boolean }) => {
+          return (
+            <DropItem
+              key={GeneratorRandomString()}
+              img={el.img}
+              title={el.title}
+              action={el.action}
+              disable={el.disable}
+            />
+          );
+        }
+      )}
     </ul>,
     node
   );

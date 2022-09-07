@@ -1,18 +1,11 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./BodyPomodoro.module.scss";
-// @ts-ignore
-import LiItem from "../UI/LiItem/LiItem.tsx";
-// @ts-ignore
-import MyButton from "../UI/MyButton/MyButton.tsx";
-// @ts-ignore
+
 import PomodoroRight from "./PomodoroRight/PomodoroRight.tsx";
-// @ts-ignore
 import PomodoroLeft from "./PomodoroLeft/PomodoroLeft.tsx";
-import { addCancelThunk } from "../../store/MainReducer";
-import getNowDay from "../../utils/getNowDay";
 
 interface IBodyPomodoro {
+  nightOrDay: boolean;
   convertTomatoFromTime: {};
   allTask: string[];
   setTask: any;
@@ -42,12 +35,23 @@ interface IBodyPomodoro {
   timerPause: () => {};
   setCountItem: (count: number, id: string) => {};
   pressSkipBreak: () => {};
+  settings: {
+    workTime: number;
+    breakTime: number;
+    bigBreakTime: number;
+  };
 }
 
 const BodyPomodoro = (props: IBodyPomodoro) => {
   return (
-    <div className={`container ${S.containerPomodoro}`}>
+    <div
+      className={`container ${S.containerPomodoro} ${
+        props.nightOrDay ? S.day : S.night
+      } `}
+    >
       <PomodoroLeft
+        settings={props.settings}
+        nightOrDay={props.nightOrDay}
         allTask={props.allTask}
         addTask={props.addTask}
         inputValue={props.inputValue}
@@ -61,6 +65,8 @@ const BodyPomodoro = (props: IBodyPomodoro) => {
       />
       {props.activeTask && (
         <PomodoroRight
+          settings={props.settings}
+          nightOrDay={props.nightOrDay}
           addCancelThunk={props.addCancelThunk}
           setCreteTask={props.setCreteTask}
           dropDownAPI={props.dropDownAPI}

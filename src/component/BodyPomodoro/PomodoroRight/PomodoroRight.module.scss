@@ -1,14 +1,28 @@
 .rbody {
+  transition: all 1s ease;
+  &.day {
+    background: var(--white);
+
+    .body {
+      background-color: var(--ligthwhite);
+    }
+  }
+  &.night {
+    background: var(--black);
+
+    .body {
+      background-color: #03443a;
+    }
+  }
   .body {
-    background-color: var(--ligthwhite);
     padding: 50px 0;
+    transition: all 1s ease;
   }
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 40px;
-    background-color: var(--gray);
     transition: all 1s ease;
     h3 {
       font-size: 16px;

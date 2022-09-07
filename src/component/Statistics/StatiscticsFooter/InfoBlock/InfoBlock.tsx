@@ -1,10 +1,14 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./../../Statistics.module.scss";
-// @ts-ignore
 import { ReactComponent as Radius } from "../../../../assets/img/radius.svg";
 
-const InfoBlock = (props) => {
+interface IInfoBlock {
+  title: string;
+  info: string;
+  logo: any;
+}
+
+const InfoBlock = (props: IInfoBlock) => {
   return (
     <div className={S.footerBlock}>
       <div className={S.left}>

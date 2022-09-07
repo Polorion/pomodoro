@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
 function useInterval(
-  interval,
-  savedInterval,
-  nameInterval,
-  callback,
-  time,
-  condition,
-  action
+  interval: any,
+  savedInterval: string,
+  nameInterval: string,
+  callback: () => {},
+  time: number,
+  condition: { time: number },
+  action: (t: boolean) => {}
 ) {
   const ref = useRef(callback);
 

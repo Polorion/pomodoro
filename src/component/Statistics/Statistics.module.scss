@@ -7,6 +7,38 @@
 .body {
   display: flex;
   margin-bottom: 30px;
+  transition: all 1s ease;
+
+  &.day {
+    background: var(--white);
+    .bodyRight {
+    }
+    .bodyLeft {
+      .tomato {
+        background: var(--ligthwhite);
+      }
+      .days {
+        background-color: var(--ligthwhite);
+      }
+    }
+  }
+  &.night {
+    background: var(--black);
+    .bodyRight {
+      background: #524f4f;
+      div {
+        color: var(--white);
+      }
+    }
+    .bodyLeft {
+      .tomato {
+        background: var(--gray);
+      }
+      .days {
+        background-color: var(--gray);
+      }
+    }
+  }
   .bodyLeft {
     max-width: 300px;
     display: flex;
@@ -19,6 +51,7 @@
       display: flex;
       flex-direction: column;
       height: 100%;
+      transition: all 1s ease;
       .day {
         font-weight: 700;
         color: var(--black);
@@ -37,6 +70,7 @@
       }
     }
     .tomato {
+      transition: all 1s ease;
       background-color: var(--ligthwhite);
       display: flex;
       align-items: center;
@@ -99,12 +133,14 @@
     }
   }
   .bodyRight {
+    transition: all 1s ease;
     background-color: var(--ligthwhite);
     width: 100%;
     display: flex;
     padding: 20px 100px 11px 56px;
     align-items: flex-end;
     position: relative;
+
     .columnBody {
       position: relative;
       z-index: 2;
@@ -133,6 +169,7 @@
       }
     }
     .time {
+      transition: all 1s ease;
       position: absolute;
       display: flex;
       flex-direction: column;
@@ -161,10 +198,23 @@
 }
 
 .footer {
+  transition: all 1s ease;
+  &.day {
+    background: var(--white);
+    .footerBlock {
+      background-color: var(--ligthwhite);
+    }
+  }
+  &.night {
+    background: var(--black);
+    .footerBlock {
+      background-color: var(--gray);
+    }
+  }
   display: flex;
   .footerBlock {
     padding: 35px 35px 25px 25px;
-    background-color: var(--ligthwhite);
+    transition: all 1s ease;
     display: flex;
     flex: 1 1 33.33333%;
     transition: all 1s ease;

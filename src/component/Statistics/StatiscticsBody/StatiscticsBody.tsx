@@ -1,25 +1,30 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./../Statistics.module.scss";
-// @ts-ignore
-import Select from "../../UI/Select/Select.tsx";
-
-// @ts-ignore
 import Row from "./Row/Row.tsx";
 import GeneratorRandomString from "../../../utils/GeneratorRandomString.jsx";
 import getRows from "../../../utils/getRows";
-
-// @ts-ignore
 import Column from "./Column/Column.tsx";
-// @ts-ignore
-
 import DayBlock from "./DayBlock/DayBlock.tsx";
-// @ts-ignore
 import TomatoBlock from "./TomatoBlock/TomatoBlock.tsx";
-const StatiscticsBody = (props) => {
+
+interface IStatiscticsBody {
+  setActiveDay: () => {};
+  tasks: [{ id: string }];
+  activeDay: {
+    allTime: string;
+  };
+  nightOrDay: boolean;
+  maxTimeTask: {
+    allTime: {
+      allSec: string;
+    };
+  };
+}
+
+const StatiscticsBody = (props: IStatiscticsBody) => {
   const row = getRows(props.maxTimeTask.allTime.allSec);
   return (
-    <div className={S.body}>
+    <div className={`${S.body} ${props.nightOrDay ? S.day : S.night}`}>
       <div className={S.bodyLeft}>
         <DayBlock
           allTime={props.activeDay.allTime}

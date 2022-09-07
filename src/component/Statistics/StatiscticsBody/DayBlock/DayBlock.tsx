@@ -1,9 +1,14 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./../../Statistics.module.scss";
 
-const DayBlock = (props) => {
-  console.log(props.activeDay, 111111111111);
+interface IDayBlock {
+  allTime: { h: number; min: number; s: number };
+  activeDay: {
+    text: string;
+  };
+}
+
+const DayBlock = (props: IDayBlock) => {
   return (
     <div className={S.days}>
       <div className={S.day}>{props.activeDay && props.activeDay.text}</div>

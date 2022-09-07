@@ -2,16 +2,22 @@
   position: relative;
   left: 10px;
   line-height: 30px;
+  transition: all 1s ease;
+  &.day {
+    color: var(--black);
+  }
+  &.night {
+    color: var(--white);
+  }
 
-   &:after {
-     position: absolute;
-     content: '';
-     left: -10px;
-     width: 5px;
-     height: 5px;
-     top: 13px;
-     border-radius: 100px;
-     background-color: var(--red);
-   }
-
+  &:after {
+    position: absolute;
+    content: "";
+    left: -10px;
+    width: 5px;
+    height: 5px;
+    top: 13px;
+    border-radius: 100px;
+    background-color: var(--red);
+  }
 }

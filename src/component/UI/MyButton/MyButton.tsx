@@ -1,5 +1,4 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./MyButton.module.scss";
 
 interface IMyButton {

@@ -1,14 +1,17 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./DelTaskWindow.module.scss";
-// @ts-ignore
 import MyButton from "../UI/MyButton/MyButton.tsx";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-// @ts-ignore
 import useGoToHome from "../../hooks/useGoToHome.tsx";
 
-const DelTaskWindow = (props) => {
+interface IDelTaskWindow {
+  delTask: (is: string) => {};
+  task: {
+    task: string;
+    id: string;
+  };
+}
+
+const DelTaskWindow = (props: IDelTaskWindow) => {
   const exit = useGoToHome();
   const delTask = () => {
     props.delTask(props.task.id);

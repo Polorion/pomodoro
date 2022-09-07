@@ -1,13 +1,15 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-
-// @ts-ignore
-import { ReactComponent as Up } from "../assets/img/up.svg"; // @ts-ignore
-import { ReactComponent as Down } from "../assets/img/down.svg"; // @ts-ignore
-import { ReactComponent as Edit } from "../assets/img/edit.svg"; // @ts-ignore
+import { ReactComponent as Up } from "../assets/img/up.svg";
+import { ReactComponent as Down } from "../assets/img/down.svg";
+import { ReactComponent as Edit } from "../assets/img/edit.svg";
 import { ReactComponent as Deleted } from "../assets/img/delete.svg";
 
-const UseGetDropDownLiData = (setPreTomato, id, tomato) => {
+const UseGetDropDownLiData = (
+  setPreTomato: (id: string, pre?: string) => {},
+  id: string,
+  tomato: number
+) => {
   const history = useNavigate();
   const add = () => {
     setPreTomato(id, "add");

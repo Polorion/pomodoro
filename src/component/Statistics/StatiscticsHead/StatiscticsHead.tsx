@@ -1,14 +1,17 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./../Statistics.module.scss";
-// @ts-ignore
 import Select from "../../UI/Select/Select.tsx";
 
-const StatiscticsHead = (props) => {
+interface IStatiscticsHead {
+  optionSelect: string;
+  setActiveTask: (s: string) => {};
+}
+
+const StatiscticsHead = (props: IStatiscticsHead) => {
   const select = (
     <Select
       value={props.optionSelect}
-      onChange={(e) => {
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
         props.setActiveTask(e.target.value);
       }}
       options={[

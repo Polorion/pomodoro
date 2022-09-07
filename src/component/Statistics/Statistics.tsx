@@ -1,15 +1,21 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./Statistics.module.scss";
 
-// @ts-ignore
 import StatiscticsHead from "./StatiscticsHead/StatiscticsHead.tsx";
-// @ts-ignore
 import StatiscticsBody from "./StatiscticsBody/StatiscticsBody.tsx";
-// @ts-ignore
 import StatiscticsFooter from "./StatiscticsFooter/StatiscticsFooter.tsx";
 
-const Statistics = (props) => {
+interface IStatistics {
+  activeDay: string;
+  setActiveDay: () => {};
+  maxTimeTask: {};
+  tasks: [{}];
+  nightOrDay: boolean;
+  setActiveTask: () => {};
+  optionSelect: string;
+}
+
+const Statistics = (props: IStatistics) => {
   return (
     <div className={"container"}>
       <StatiscticsHead
@@ -17,12 +23,16 @@ const Statistics = (props) => {
         optionSelect={props.optionSelect}
       />
       <StatiscticsBody
+        nightOrDay={props.nightOrDay}
         tasks={props.tasks}
         maxTimeTask={props.maxTimeTask}
         setActiveDay={props.setActiveDay}
         activeDay={props.activeDay}
       />
-      <StatiscticsFooter activeDay={props.activeDay} />
+      <StatiscticsFooter
+        activeDay={props.activeDay}
+        nightOrDay={props.nightOrDay}
+      />
     </div>
   );
 };

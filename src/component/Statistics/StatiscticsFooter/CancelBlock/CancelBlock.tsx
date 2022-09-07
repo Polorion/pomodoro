@@ -1,10 +1,15 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./../../Statistics.module.scss";
-// @ts-ignore
 import B from "./InfoBlock.module.scss";
 
-const CancelBlock = (props) => {
+interface ICancelBlock {
+  logo: any;
+  isActive: boolean;
+  title: string;
+  info: string;
+}
+
+const CancelBlock = (props: ICancelBlock) => {
   return (
     <div className={`${S.footerBlock} ${props.isActive && B.bodyColor}`}>
       <div className={S.left}>

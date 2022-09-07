@@ -1,10 +1,19 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./../../Statistics.module.scss";
-// @ts-ignore
 import B from "./PausedBlock.module.scss";
 
-const PauseBlock = (props) => {
+interface IPauseBlock {
+  logo: any;
+  isActive: boolean;
+  title: string;
+  info: {
+    h: number;
+    min: number;
+    s: number;
+  };
+}
+
+const PauseBlock = (props: IPauseBlock) => {
   return (
     <div className={`${S.footerBlock} ${props.isActive && B.bodyColor}`}>
       <div className={S.left}>

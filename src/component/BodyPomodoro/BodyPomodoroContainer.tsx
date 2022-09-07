@@ -1,16 +1,13 @@
 import * as React from "react";
-// @ts-ignore
 import BodyPomodoro from "./BodyPomodoro.tsx";
 import { connect } from "react-redux";
 import { Outlet } from "react-router-dom";
-import fromMsToTime from "../../utils/ConverterMsFromTime";
 import {
   addMinute,
   addTomato,
   deleteTask,
   pressSkipBreak,
   setActiveTaskThunk,
-  setBreakThunk,
   setCountItem,
   setInputValue,
   setTask,
@@ -23,20 +20,21 @@ import {
   setTimerInterval,
   setPreTomato,
   setPreTimeTomato,
-  // @ts-ignore
+  setBreak,
 } from "../../store/MainReducer.ts";
-// @ts-ignore
 import useInterval from "../../hooks/useInterval.tsx";
-// @ts-ignore
 import useSetActiveTask from "../../hooks/useSetActiveTask.tsx";
-// @ts-ignore
 import { setCreteTask } from "../../store/StatisticsReducer.ts";
-import getNowDay from "../../utils/getNowDay";
-// @ts-ignore
+import getNowDay from "../../utils/getNowDay.ts";
 import transormTaskForStatistic from "../../utils/transormTaskForStatistic";
-import { useEffect, useState } from "react";
-
+import useGetTimeBottomForm from "../../hooks/useGetTimeBottomForm.tsx";
+import audio from "../../assets/audio/first.mp3";
+import { useRef } from "react";
 interface IBodyPomodoroContainer {
+  isBreak: boolean;
+  task: string;
+  setDayOrNight: boolean;
+  nightOrDay: boolean;
   convertTomatoFromTime: {};
   allTask: [
     {
@@ -46,6 +44,11 @@ interface IBodyPomodoroContainer {
       tomato: number;
       isBreak: boolean;
       isPause: boolean;
+      settings: {
+        workTime: number;
+        breakTime: number;
+        bigBreakTime: number;
+      };
     }
   ];
   setTask: any;
@@ -60,23 +63,38 @@ interface IBodyPomodoroContainer {
   subTomato: (id: string) => {};
   setPreTomato: (id: string) => {};
   deleteTask: () => {};
-  addMinute: () => {};
+  addMinute: (q: string, d: number) => {};
   setTimerInterval: () => {};
   setCreteTask: (day: string, task: {}) => {};
   addTest: (test: string) => {};
   timerPause: () => {};
   setCountItem: (count: number, id: string) => {};
-  setBreakThunk: (task: string, tomato: number, isBreak: boolean) => {};
   pressSkipBreak: (task: string) => {};
   addSecondPaused: (task: string) => {};
   addCancelThunk: any;
   intervalPaused: string;
   intervalGo: string;
+  settings: {
+    workTime: number;
+    breakTime: number;
+    bigBreakTime: number;
+  };
 
   setPreTimeTomato(fromMsToTime1: any): void;
+
+  setBreak(id: string): void;
 }
 
 const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
+  const playSound = (text: string) => {
+    // @ts-ignore
+    audioRef.current.play();
+    console.log(audioRef.current);
+    alert(text);
+    console.log(audioRef.current, 111);
+  };
+  const audioRef = useRef(null);
+
   const viewTask = props.allTask.filter((el) => {
     if (el.id === props.activeTask) {
       return el;
@@ -93,11 +111,19 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
       }
       props.timerRun(false);
       stopTimer();
-      props.setBreakThunk(
-        viewTask[0].id,
-        viewTask[0].tomato + 1,
-        viewTask[0].isBreak
-      );
+      if (viewTask[0].isBreak) {
+        props.addMinute(viewTask[0].id, props.settings.workTime);
+      } else {
+        if (viewTask[0].tomato % 3 === 0 && viewTask[0].tomato !== 0) {
+          props.addMinute(viewTask[0].id, props.settings.bigBreakTime);
+          playSound("большой перерыв");
+        } else {
+          props.addMinute(viewTask[0].id, props.settings.breakTime);
+          playSound("мленький перерыв");
+        }
+      }
+      props.setBreak(viewTask[0].id);
+
       if (viewTask[0].presumablyTomato > 0) {
         props.setPreTomato(viewTask[0].id);
       }
@@ -138,21 +164,14 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
     });
     props.setCreteTask(getNowDay(), transormTaskForStatistic(task[0]));
   };
-
-  useEffect(() => {
-    const allTimeWork = () => {
-      const timeOfWorking = props.allTask.reduce((el, item) => {
-        return el + item.presumablyTomato;
-      }, 0);
-      props.setPreTimeTomato(fromMsToTime(timeOfWorking * 15 * 60000));
-    };
-
-    allTimeWork();
-  }, [props.allTask]);
+  useGetTimeBottomForm(props.allTask, props.setPreTimeTomato);
   return (
     <>
       <Outlet />
+      <audio ref={audioRef} src={audio}></audio>
       <BodyPomodoro
+        settings={props.settings}
+        nightOrDay={props.nightOrDay}
         convertTomatoFromTime={props.convertTomatoFromTime}
         setCreteTask={creatTask}
         pressSkipBreak={props.pressSkipBreak}
@@ -179,7 +198,7 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
   return {
     allTask: state.MainPage.allTask,
     inputValue: state.MainPage.inputValue,
@@ -188,6 +207,8 @@ const mapStateToProps = (state) => {
     intervalPaused: state.MainPage.intervalPaused,
     intervalGo: state.MainPage.intervalGo,
     convertTomatoFromTime: state.MainPage.convertTomatoFromTime,
+    nightOrDay: state.MainPage.nightOrDay,
+    settings: state.Statistics.settings,
   };
 };
 export default connect(mapStateToProps, {
@@ -201,7 +222,6 @@ export default connect(mapStateToProps, {
   addMinute,
   timerPause,
   setCountItem,
-  setBreakThunk,
   deleteTask,
   addSecondPaused,
   addCancelThunk,
@@ -210,4 +230,5 @@ export default connect(mapStateToProps, {
   setCreteTask,
   setPreTomato,
   setPreTimeTomato,
+  setBreak,
 })(BodyPomodoroContainer);

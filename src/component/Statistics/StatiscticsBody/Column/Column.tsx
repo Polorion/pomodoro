@@ -1,8 +1,19 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./../../Statistics.module.scss";
 
-const Column = (props) => {
+interface IColumn {
+  day: {
+    allTime: {
+      allSec: number;
+    };
+    text: string;
+  };
+
+  setActiveDay: (s: {}) => {};
+  activeDay: { text: string };
+}
+
+const Column = (props: IColumn) => {
   const onePixel = 2.66;
   const heightColumn = (props.day.allTime.allSec / 60000) * onePixel;
 

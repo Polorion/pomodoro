@@ -22,6 +22,14 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    .title {
+      &.day {
+        color: var(--black);
+      }
+      &.night {
+        color: var(--white);
+      }
+    }
     .count {
       width: 25px;
       height: 25px;
@@ -32,6 +40,13 @@
       justify-content: center;
       margin-right: 5px;
       transition: all 0.5s ease;
+
+      &.day {
+        color: var(--black);
+      }
+      &.night {
+        color: var(--white);
+      }
     }
   }
 }

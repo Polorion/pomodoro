@@ -1,9 +1,15 @@
 import * as React from "react";
-// @ts-ignore
-import S from "./../../Statistics.module.scss"; // @ts-ignore
+import S from "./../../Statistics.module.scss";
 import B from "./FocusBlock.module.scss";
 
-const FocusBlock = (props) => {
+interface IFocusBlock {
+  logo: any;
+  isActive: boolean;
+  title: string;
+  info: string;
+}
+
+const FocusBlock = (props: IFocusBlock) => {
   return (
     <div className={`${S.footerBlock} ${props.isActive && B.bodyColor}`}>
       <div className={S.left}>

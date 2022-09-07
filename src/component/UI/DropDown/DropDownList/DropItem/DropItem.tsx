@@ -1,8 +1,5 @@
 import * as React from "react";
-// @ts-ignore
 import S from "../../DropDown.module.scss";
-// @ts-ignore
-import ReactDOM from "react-dom";
 
 interface IDropItem {
   disable: boolean;

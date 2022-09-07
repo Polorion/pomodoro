@@ -1,14 +1,19 @@
 import * as React from "react";
-// @ts-ignore
 import S from "./EditTaskWindow.module.scss";
-// @ts-ignore
 import MyButton from "../UI/MyButton/MyButton.tsx";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-// @ts-ignore
 import useGoToHome from "../../hooks/useGoToHome.tsx";
 
-const EditTaskWindow = (props) => {
+interface IEditTaskWindow {
+  editInput: string;
+  taskEdit: (taks: any) => {};
+  editInputText: (t: string) => {};
+  task: {
+    task: string;
+  };
+}
+
+const EditTaskWindow = (props: IEditTaskWindow) => {
   const saveEdit = () => {
     props.taskEdit(props.task);
     exit();
@@ -17,7 +22,7 @@ const EditTaskWindow = (props) => {
     props.editInputText(props.task.task);
   }, []);
   const exit = useGoToHome();
-  const changeValue = (e) => {
+  const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.editInputText(e.currentTarget.value);
   };
   return (

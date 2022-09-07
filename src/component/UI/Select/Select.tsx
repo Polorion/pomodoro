@@ -1,6 +1,18 @@
 import * as React from "react";
 
-const Select = (props) => {
+interface ISelect {
+  label: string;
+  value: string;
+  onChange: () => {};
+  options: [
+    {
+      value: string;
+      text: string;
+    }
+  ];
+}
+
+const Select = (props: ISelect) => {
   return (
     <div>
       <label>
