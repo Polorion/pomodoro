@@ -2,7 +2,6 @@ import * as React from "react";
 import Header from "./Header.tsx";
 import { connect } from "react-redux";
 import { setNightOrDay, timerRun } from "../../store/MainReducer.ts";
-import audio from "../../assets/audio/first.mp3";
 
 interface IHeaderContainer {
   setNightOrDay: any;
@@ -21,7 +20,6 @@ const HeaderContainer = (props: IHeaderContainer) => {
   };
   return (
     <>
-      <audio src={audio}></audio>
       <Header
         stopAllInterval={stopAllInterval}
         setNightOrDay={props.setNightOrDay}

@@ -87,11 +87,11 @@ interface IBodyPomodoroContainer {
 
 const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
   const playSound = (text: string) => {
+    setTimeout(() => {
+      alert(text);
+    }, 100);
     // @ts-ignore
     audioRef.current.play();
-    console.log(audioRef.current);
-    alert(text);
-    console.log(audioRef.current, 111);
   };
   const audioRef = useRef(null);
 
