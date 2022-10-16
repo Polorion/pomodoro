@@ -10,7 +10,6 @@ const getNameButton = (
   pressSkipBreak: any,
   dropDownAPI: any,
   addCancelThunk: any,
-  APITimerStop: any,
   setCreteTask: any,
   settings: {
     workTime: number;
@@ -20,24 +19,24 @@ const getNameButton = (
 ) => {
   const startTimer = () => {
     APITimer.startTimer();
-    APITimerStop.stopTimerPaused();
+    APITimer.stopTimerPaused();
     timerPause(task, false);
   };
   const stopTimer = () => {
-    APITimerStop.startTimerPaused();
+    APITimer.startTimerPaused();
     APITimer.stopTimer();
     timerPause(task, true);
   };
 
   const skipBreak = () => {
-    APITimerStop.stopTimerPaused();
+    APITimer.stopTimerPaused();
     APITimer.stopTimer();
     pressSkipBreak(task, settings.workTime);
     timerPause(task, false);
   };
   const complit = () => {
     setCreteTask(task);
-    APITimerStop.stopTimerPaused();
+    APITimer.stopTimerPaused();
     dropDownAPI.deleteTask(task);
   };
   const stop = () => {

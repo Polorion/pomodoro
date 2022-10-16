@@ -5,6 +5,7 @@ import { ReactComponent as Add } from "../../../assets/img/add.svg";
 import fromMsToTime from "../../../utils/ConverterMsFromTime";
 
 import useGetNameButton from "../../../utils/getNameButton.tsx";
+import ViewTask from "../../../HOK/ViewTask";
 
 interface IPomodoroRight {
   nightOrDay: boolean;
@@ -16,17 +17,15 @@ interface IPomodoroRight {
   task: string;
   setTimerThunk: any;
   addCancelThunk: any;
-  viewTask: [
-    {
-      id: string;
-      task: string;
-      time: number;
-      isPause: boolean;
-      isBreak: boolean;
-      tomato: number;
-      count: number;
-    }
-  ];
+  viewTask: {
+    id: string;
+    task: string;
+    time: number;
+    isPause: boolean;
+    isBreak: boolean;
+    tomato: number;
+    count: number;
+  };
   APITimer: {
     startTimer: () => {};
     stopTimer: () => {};
@@ -50,30 +49,29 @@ interface IPomodoroRight {
 const PomodoroRight = (props: IPomodoroRight) => {
   const btnActions = useGetNameButton(
     props.timerIsRun,
-    props.viewTask[0].isBreak,
-    props.viewTask[0].isPause,
+    props.viewTask.isBreak,
+    props.viewTask.isPause,
     props.APITimer,
     props.timerPause,
-    props.viewTask[0].id,
+    props.viewTask.id,
     props.pressSkipBreak,
     props.dropDownAPI,
     props.addCancelThunk,
-    props.APITimerStop,
     props.setCreteTask,
     props.settings
   );
 
-  const color = `${props.viewTask[0].isBreak ? S.color_green : S.color_red}  ${
+  const color = `${props.viewTask.isBreak ? S.color_green : S.color_red}  ${
     !props.timerIsRun && S.none
   }`;
-  const { s, min } = fromMsToTime(props.viewTask[0].time);
+  const { s, min } = fromMsToTime(props.viewTask.time);
   return (
     btnActions && (
       <div className={`${S.rbody}  ${props.nightOrDay ? S.day : S.night}`}>
         <header className={`${S.header} ${color} `}>
-          <h3>{props.viewTask[0].task}</h3>
+          <h3>{props.viewTask.task}</h3>
           <div>
-            Помидор: <span>{props.viewTask[0].tomato}</span>
+            Помидор: <span>{props.viewTask.tomato}</span>
           </div>
         </header>
         <body className={S.body}>
@@ -86,15 +84,15 @@ const PomodoroRight = (props: IPomodoroRight) => {
               <div
                 className={S.btnAdd}
                 onClick={() => {
-                  props.addMinute(props.viewTask[0].id);
+                  props.addMinute(props.viewTask.id);
                 }}
               >
                 <Add className={S.img} />
               </div>
             </div>
             <div className={S.task}>
-              задача:<span>{props.viewTask[0].count} - </span>
-              <div>{props.viewTask[0].task}</div>
+              задача:<span>{props.viewTask.count} - </span>
+              <div>{props.viewTask.task}</div>
             </div>
           </div>
           <div>
@@ -116,5 +114,5 @@ const PomodoroRight = (props: IPomodoroRight) => {
     )
   );
 };
-
-export default PomodoroRight;
+// @ts-ignore
+export default ViewTask(PomodoroRight);

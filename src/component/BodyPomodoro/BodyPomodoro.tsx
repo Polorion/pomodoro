@@ -74,7 +74,6 @@ const BodyPomodoro = (props: IBodyPomodoro) => {
           pressSkipBreak={props.pressSkipBreak}
           viewTask={props.viewTask}
           APITimer={props.APITimer}
-          APITimerStop={props.APITimerStop}
           timerIsRun={props.timerIsRun}
           timerPause={props.timerPause}
         />

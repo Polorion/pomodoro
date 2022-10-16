@@ -4,8 +4,10 @@ import MyButton from "../../UI/MyButton/MyButton.tsx";
 import S from "./PomodoroLeft.module.scss";
 import Intention from "../../UI/Intention/Intention.tsx";
 import GeneratorRandomString from "../../../utils/GeneratorRandomString";
+import ViewTask from "../../../HOK/ViewTask";
+import { IBodyPomodoroContainer } from "../BodyPomodoroContainer";
 
-interface IPomodoroLeft {
+export interface IPomodoroLeft {
   nightOrDay: boolean;
   convertTomatoFromTime: {
     h: number;
@@ -33,7 +35,13 @@ interface IPomodoroLeft {
   };
 }
 
-const PomodoroLeft = (props: IPomodoroLeft) => {
+const PomodoroLeft = (
+  props: IBodyPomodoroContainer & {
+    addTask: (valueInput: string, id: string, createTimeMS: {}) => {};
+    stopTimer: () => {};
+    dropDownAPI: () => {};
+  }
+) => {
   const addTask = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (props.inputValue) {
@@ -105,4 +113,4 @@ const PomodoroLeft = (props: IPomodoroLeft) => {
   );
 };
 
-export default PomodoroLeft;
+export default ViewTask(PomodoroLeft);

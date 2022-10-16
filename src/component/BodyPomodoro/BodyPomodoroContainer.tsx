@@ -28,15 +28,14 @@ import { setCreteTask } from "../../store/StatisticsReducer.ts";
 import getNowDay from "../../utils/getNowDay.ts";
 import transormTaskForStatistic from "../../utils/transormTaskForStatistic";
 import useGetTimeBottomForm from "../../hooks/useGetTimeBottomForm.tsx";
-import audio from "../../assets/audio/first.mp3";
-import { useRef } from "react";
 import SongPlay from "../../HOK/SongPlay";
+import ViewTask from "../../HOK/ViewTask";
 export interface IBodyPomodoroContainer {
   isBreak: boolean;
   task: string;
   setDayOrNight: boolean;
   nightOrDay: boolean;
-  convertTomatoFromTime: {};
+  convertTomatoFromTime: { h: number; min: number };
   allTask: [
     {
       presumablyTomato: number;
@@ -45,6 +44,7 @@ export interface IBodyPomodoroContainer {
       tomato: number;
       isBreak: boolean;
       isPause: boolean;
+      task: any;
       settings: {
         workTime: number;
         breakTime: number;
@@ -81,6 +81,7 @@ export interface IBodyPomodoroContainer {
     bigBreakTime: number;
   };
   playSound: any;
+  viewTask: any;
 
   setPreTimeTomato(fromMsToTime1: any): void;
 
@@ -88,44 +89,39 @@ export interface IBodyPomodoroContainer {
 }
 
 const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
-  const viewTask = props.allTask.filter((el) => {
-    if (el.id === props.activeTask) {
-      return el;
-    }
-  });
   useSetActiveTask(props.allTask, props.setActiveTaskThunk);
 
   const setTimer = () => {
-    if (viewTask[0].time > 1000) {
-      props.setTimerThunk(viewTask[0].id);
+    if (props.viewTask.time > 1000) {
+      props.setTimerThunk(props.viewTask.id);
     } else {
-      if (viewTask[0].time !== 0) {
-        props.setTimerThunk(viewTask[0].id);
+      if (props.viewTask.time !== 0) {
+        props.setTimerThunk(props.viewTask.id);
       }
       props.timerRun(false);
       stopTimer();
-      if (viewTask[0].isBreak) {
-        props.addMinute(viewTask[0].id, props.settings.workTime);
+      if (props.viewTask.isBreak) {
+        props.addMinute(props.viewTask.id, props.settings.workTime);
       } else {
-        if (viewTask[0].tomato % 3 === 0 && viewTask[0].tomato !== 0) {
-          props.addMinute(viewTask[0].id, props.settings.bigBreakTime);
+        if (props.viewTask.tomato % 3 === 0 && props.viewTask.tomato !== 0) {
+          props.addMinute(props.viewTask.id, props.settings.bigBreakTime);
           props.playSound("большой перерыв");
         } else {
-          props.addMinute(viewTask[0].id, props.settings.breakTime);
+          props.addMinute(props.viewTask.id, props.settings.breakTime);
           props.playSound("мленький перерыв");
         }
       }
-      props.setBreak(viewTask[0].id);
+      props.setBreak(props.viewTask.id);
 
-      if (viewTask[0].presumablyTomato > 0) {
-        props.setPreTomato(viewTask[0].id);
+      if (props.viewTask.presumablyTomato > 0) {
+        props.setPreTomato(props.viewTask.id);
       }
-      if (!viewTask[0].isBreak) {
-        props.addTomato(viewTask[0].id);
+      if (!props.viewTask.isBreak) {
+        props.addTomato(props.viewTask.id);
       }
     }
-    if (viewTask[0].isBreak) {
-      props.addSecondPaused(viewTask[0].id);
+    if (props.viewTask.isBreak) {
+      props.addSecondPaused(props.viewTask.id);
     }
   };
   const [startTimer, stopTimer] = useInterval(
@@ -134,12 +130,12 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
     "intervalGo",
     setTimer,
     1000,
-    viewTask[0],
+    props.viewTask,
     props.timerRun
   );
 
   const pausedTick = () => {
-    props.addSecondPaused(viewTask[0].id);
+    props.addSecondPaused(props.viewTask.id);
   };
 
   const [startTimerPaused, stopTimerPaused] = useInterval(
@@ -148,7 +144,7 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
     "intervalPaused",
     pausedTick,
     1000,
-    viewTask[0]
+    props.viewTask
   );
 
   const creatTask = () => {
@@ -176,9 +172,7 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
         inputValue={props.inputValue}
         setInputValue={props.setInputValue}
         activeTask={props.activeTask}
-        viewTask={viewTask}
-        APITimer={{ startTimer, stopTimer }}
-        APITimerStop={{ startTimerPaused, stopTimerPaused }}
+        APITimer={{ startTimer, stopTimer, startTimerPaused, stopTimerPaused }}
         timerIsRun={props.timerIsRun}
         setActiveTaskThunk={props.setActiveTaskThunk}
         addCancelThunk={props.addCancelThunk}
@@ -224,4 +218,4 @@ export default connect(mapStateToProps, {
   setPreTomato,
   setPreTimeTomato,
   setBreak,
-})(SongPlay(BodyPomodoroContainer));
+})(ViewTask(SongPlay(BodyPomodoroContainer)));
