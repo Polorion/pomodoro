@@ -30,7 +30,8 @@ import transormTaskForStatistic from "../../utils/transormTaskForStatistic";
 import useGetTimeBottomForm from "../../hooks/useGetTimeBottomForm.tsx";
 import audio from "../../assets/audio/first.mp3";
 import { useRef } from "react";
-interface IBodyPomodoroContainer {
+import SongPlay from "../../HOK/SongPlay";
+export interface IBodyPomodoroContainer {
   isBreak: boolean;
   task: string;
   setDayOrNight: boolean;
@@ -79,6 +80,7 @@ interface IBodyPomodoroContainer {
     breakTime: number;
     bigBreakTime: number;
   };
+  playSound: any;
 
   setPreTimeTomato(fromMsToTime1: any): void;
 
@@ -86,15 +88,6 @@ interface IBodyPomodoroContainer {
 }
 
 const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
-  const playSound = (text: string) => {
-    setTimeout(() => {
-      alert(text);
-    }, 100);
-    // @ts-ignore
-    audioRef.current.play();
-  };
-  const audioRef = useRef(null);
-
   const viewTask = props.allTask.filter((el) => {
     if (el.id === props.activeTask) {
       return el;
@@ -116,10 +109,10 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
       } else {
         if (viewTask[0].tomato % 3 === 0 && viewTask[0].tomato !== 0) {
           props.addMinute(viewTask[0].id, props.settings.bigBreakTime);
-          playSound("большой перерыв");
+          props.playSound("большой перерыв");
         } else {
           props.addMinute(viewTask[0].id, props.settings.breakTime);
-          playSound("мленький перерыв");
+          props.playSound("мленький перерыв");
         }
       }
       props.setBreak(viewTask[0].id);
@@ -168,7 +161,7 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
   return (
     <>
       <Outlet />
-      <audio ref={audioRef} src={audio}></audio>
+
       <BodyPomodoro
         settings={props.settings}
         nightOrDay={props.nightOrDay}
@@ -231,4 +224,4 @@ export default connect(mapStateToProps, {
   setPreTomato,
   setPreTimeTomato,
   setBreak,
-})(BodyPomodoroContainer);
+})(SongPlay(BodyPomodoroContainer));
