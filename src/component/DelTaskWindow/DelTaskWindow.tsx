@@ -28,7 +28,7 @@ const DelTaskWindow = (props: IDelTaskWindow) => {
       >
         <div className={S.exit} onClick={exit}></div>
         <div className={S.title}>Дело: {props.task.task}</div>
-        <div className={S.btns}>
+        <div className={S.btn}>
           <MyButton hendler={delTask} title={"Удалить"} stop={true} />
           <MyButton hendler={exit} title={"Отмена"} />
         </div>

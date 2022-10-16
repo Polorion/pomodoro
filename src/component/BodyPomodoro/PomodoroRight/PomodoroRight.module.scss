@@ -1,4 +1,4 @@
-.rbody {
+.rightBody {
   transition: all 1s ease;
   &.day {
     background: var(--white);
@@ -96,7 +96,7 @@
       color: var(--black);
     }
   }
-  .btns {
+  .btn {
     display: flex;
     justify-content: center;
     button:first-child {

@@ -6,50 +6,26 @@ import Intention from "../../UI/Intention/Intention.tsx";
 import GeneratorRandomString from "../../../utils/GeneratorRandomString";
 import ViewTask from "../../../HOK/ViewTask";
 import { IBodyPomodoroContainer } from "../BodyPomodoroContainer";
+import NightOrDay from "../../../HOK/NightOrDay";
+import { useState } from "react";
 
-export interface IPomodoroLeft {
-  nightOrDay: boolean;
-  convertTomatoFromTime: {
-    h: number;
-    min: number;
-  };
-  allTask: [
-    {
-      task: string;
-      id: string;
-      presumablyTomato: number;
-    }
-  ];
-  addTask: any;
-  setActiveTaskThunk: any;
-  setInputValue: any;
-  inputValue: string;
-  activeTask: string;
+export interface IPomodoroLeft extends IBodyPomodoroContainer {
+  addTask: (valueInput: string, id: string, createTimeMS: {}) => {};
   stopTimer: () => {};
-  dropDownAPI: {};
-  setCountItem: (count: number, id: string) => {};
-  settings: {
-    workTime: number;
-    breakTime: number;
-    bigBreakTime: number;
-  };
+  dropDownAPI: () => {};
 }
 
-const PomodoroLeft = (
-  props: IBodyPomodoroContainer & {
-    addTask: (valueInput: string, id: string, createTimeMS: {}) => {};
-    stopTimer: () => {};
-    dropDownAPI: () => {};
-  }
-) => {
+const PomodoroLeft = (props: IPomodoroLeft) => {
+  const [inputValue, setInputValue] = useState("");
   const addTask = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (props.inputValue) {
+    if (inputValue) {
       props.addTask(
-        props.inputValue,
+        inputValue,
         GeneratorRandomString(),
         props.settings.workTime
       );
+      setInputValue("");
     }
   };
   const allLi = [
@@ -77,9 +53,9 @@ const PomodoroLeft = (
       >
         <input
           onInput={(e) => {
-            props.setInputValue(e.currentTarget.value);
+            setInputValue(e.currentTarget.value);
           }}
-          value={props.inputValue}
+          value={inputValue}
           placeholder={"Название задачи"}
           type="text"
         />
@@ -113,4 +89,4 @@ const PomodoroLeft = (
   );
 };
 
-export default ViewTask(PomodoroLeft);
+export default NightOrDay(ViewTask(PomodoroLeft));

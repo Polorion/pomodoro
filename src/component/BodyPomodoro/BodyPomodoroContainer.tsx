@@ -9,7 +9,6 @@ import {
   pressSkipBreak,
   setActiveTaskThunk,
   setCountItem,
-  setInputValue,
   setTask,
   setTimerThunk,
   subTomato,
@@ -53,7 +52,7 @@ export interface IBodyPomodoroContainer {
     }
   ];
   setTask: any;
-  setInputValue: any;
+
   setActiveTaskThunk: any;
   setTimerThunk: any;
   inputValue: string;
@@ -64,7 +63,7 @@ export interface IBodyPomodoroContainer {
   subTomato: (id: string) => {};
   setPreTomato: (id: string) => {};
   deleteTask: () => {};
-  addMinute: (q: string, d: number) => {};
+  addMinute: (q: string, d?: number) => {};
   setTimerInterval: () => {};
   setCreteTask: (day: string, task: {}) => {};
   addTest: (test: string) => {};
@@ -160,20 +159,19 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
 
       <BodyPomodoro
         settings={props.settings}
-        nightOrDay={props.nightOrDay}
         convertTomatoFromTime={props.convertTomatoFromTime}
         setCreteTask={creatTask}
         pressSkipBreak={props.pressSkipBreak}
         setCountItem={props.setCountItem}
-        timerPause={props.timerPause}
+        timerPauseOrRun={{
+          timerPause: props.timerPause,
+          timerIsRun: props.timerIsRun,
+        }}
         addMinute={props.addMinute}
         allTask={props.allTask}
-        addTask={props.setTask}
-        inputValue={props.inputValue}
-        setInputValue={props.setInputValue}
+        setTask={props.setTask}
         activeTask={props.activeTask}
         APITimer={{ startTimer, stopTimer, startTimerPaused, stopTimerPaused }}
-        timerIsRun={props.timerIsRun}
         setActiveTaskThunk={props.setActiveTaskThunk}
         addCancelThunk={props.addCancelThunk}
         dropDownAPI={{
@@ -188,7 +186,6 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
 const mapStateToProps = (state: any) => {
   return {
     allTask: state.MainPage.allTask,
-    inputValue: state.MainPage.inputValue,
     activeTask: state.MainPage.activeTask,
     timerIsRun: state.MainPage.timerIsRun,
     intervalPaused: state.MainPage.intervalPaused,
@@ -200,7 +197,7 @@ const mapStateToProps = (state: any) => {
 };
 export default connect(mapStateToProps, {
   setTask,
-  setInputValue,
+
   setActiveTaskThunk,
   setTimerThunk,
   timerRun,

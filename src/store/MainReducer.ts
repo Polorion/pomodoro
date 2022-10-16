@@ -189,10 +189,9 @@ const initionalState = {
       presumablyTomato: 1,
     },
   ],
-  inputValue: "",
   activeTask: "",
   timerIsRun: false,
-  editInput: "",
+  setInputValue: "",
   intervalPaused: "",
   intervalGo: "",
   nightOrDay: false,
@@ -408,15 +407,11 @@ const MainRecucer = (
           return el;
         }),
       };
-    case SET_INPUT_VALUE:
-      return {
-        ...state,
-        inputValue: action.text,
-      };
+
     case EDIT_INPUT_VALUE:
       return {
         ...state,
-        editInput: action.text,
+        setInputValue: action.text,
       };
     case SET_ACTIVE_TASK:
       return {
@@ -430,7 +425,7 @@ const MainRecucer = (
           if (el.id === action.task.id) {
             return {
               ...el,
-              task: state.editInput,
+              task: state.setInputValue,
             };
           }
           return el;
@@ -451,13 +446,8 @@ export const setTask =
   ): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {
     dispatch(addTask(task, id, time));
-    dispatch(addInputValue(""));
   };
-export const setInputValue =
-  (text: string): ThunkAction<void, AppStateType, unknown, Action<string>> =>
-  (dispatch) => {
-    dispatch(addInputValue(text));
-  };
+
 export const setActiveTaskThunk =
   (text: string): ThunkAction<void, AppStateType, unknown, Action<string>> =>
   (dispatch) => {

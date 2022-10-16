@@ -1,11 +1,10 @@
 import * as React from "react";
 
 const getNameButton = (
-  timerIsRun: any,
+  timerPauseOrRun: any,
   isBreak: any,
   isPause: any,
   APITimer: any,
-  timerPause: any,
   task: any,
   pressSkipBreak: any,
   dropDownAPI: any,
@@ -20,19 +19,19 @@ const getNameButton = (
   const startTimer = () => {
     APITimer.startTimer();
     APITimer.stopTimerPaused();
-    timerPause(task, false);
+    timerPauseOrRun.timerPause(task, false);
   };
   const stopTimer = () => {
     APITimer.startTimerPaused();
     APITimer.stopTimer();
-    timerPause(task, true);
+    timerPauseOrRun.timerPause(task, true);
   };
 
   const skipBreak = () => {
     APITimer.stopTimerPaused();
     APITimer.stopTimer();
     pressSkipBreak(task, settings.workTime);
-    timerPause(task, false);
+    timerPauseOrRun.timerPause(task, false);
   };
   const complit = () => {
     setCreteTask(task);
@@ -44,7 +43,7 @@ const getNameButton = (
     APITimer.stopTimer();
   };
   const tremconst = () => {
-    if (!timerIsRun && !isBreak && isPause) {
+    if (!timerPauseOrRun.timerIsRun && !isBreak && isPause) {
       return {
         l: {
           title: "Продолжить",
@@ -56,7 +55,7 @@ const getNameButton = (
         },
       };
     }
-    if (timerIsRun && !isBreak && !isPause) {
+    if (timerPauseOrRun.timerIsRun && !isBreak && !isPause) {
       return {
         l: {
           title: "Пауза",
@@ -68,7 +67,7 @@ const getNameButton = (
         },
       };
     }
-    if (!timerIsRun && isBreak && !isPause) {
+    if (!timerPauseOrRun.timerIsRun && isBreak && !isPause) {
       return {
         l: {
           title: "Старт",
@@ -80,7 +79,7 @@ const getNameButton = (
         },
       };
     }
-    if (timerIsRun && isBreak && !isPause) {
+    if (timerPauseOrRun.timerIsRun && isBreak && !isPause) {
       return {
         l: {
           title: "Пауза",
@@ -92,7 +91,7 @@ const getNameButton = (
         },
       };
     }
-    if (!timerIsRun && isBreak && isPause) {
+    if (!timerPauseOrRun.timerIsRun && isBreak && isPause) {
       return {
         l: {
           title: "Продолжить",
@@ -104,7 +103,7 @@ const getNameButton = (
         },
       };
     }
-    if (!timerIsRun && !isBreak && !isPause) {
+    if (!timerPauseOrRun.timerIsRun && !isBreak && !isPause) {
       return {
         l: {
           title: "Старт",

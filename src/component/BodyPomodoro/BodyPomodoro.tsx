@@ -3,42 +3,21 @@ import S from "./BodyPomodoro.module.scss";
 
 import PomodoroRight from "./PomodoroRight/PomodoroRight.tsx";
 import PomodoroLeft from "./PomodoroLeft/PomodoroLeft.tsx";
+import NightOrDay from "../../HOK/NightOrDay";
+import { IBodyPomodoroContainer } from "./BodyPomodoroContainer";
 
-interface IBodyPomodoro {
-  nightOrDay: boolean;
-  convertTomatoFromTime: {};
-  allTask: string[];
-  setTask: any;
-  addTask: void;
-  setInputValue: any;
-  setActiveTaskThunk: any;
-  inputValue: string;
-  activeTask: string;
-  setTimerThunk: any;
-  addCancelThunk: any;
-  viewTask: {
-    id: string;
-    task: string;
-  };
+export interface IBodyPomodoro extends IBodyPomodoroContainer {
   APITimer: {
-    startTimer: () => {};
     stopTimer: () => {};
-  };
-  APITimerStop: {
     startTimer: () => {};
-    stopTimer: () => {};
+
+    startTimerPaused: () => {};
+    stopTimerPaused: () => {};
   };
-  timerIsRun: boolean;
   dropDownAPI: {};
-  addMinute: () => {};
-  setCreteTask: () => {};
-  timerPause: () => {};
-  setCountItem: (count: number, id: string) => {};
-  pressSkipBreak: () => {};
-  settings: {
-    workTime: number;
-    breakTime: number;
-    bigBreakTime: number;
+  timerPauseOrRun: {
+    timerPause: () => {};
+    timerIsRun: () => {};
   };
 }
 
@@ -51,11 +30,8 @@ const BodyPomodoro = (props: IBodyPomodoro) => {
     >
       <PomodoroLeft
         settings={props.settings}
-        nightOrDay={props.nightOrDay}
         allTask={props.allTask}
-        addTask={props.addTask}
-        inputValue={props.inputValue}
-        setInputValue={props.setInputValue}
+        addTask={props.setTask}
         setActiveTaskThunk={props.setActiveTaskThunk}
         activeTask={props.activeTask}
         stopTimer={props.APITimer.stopTimer}
@@ -66,7 +42,6 @@ const BodyPomodoro = (props: IBodyPomodoro) => {
       {props.activeTask && (
         <PomodoroRight
           settings={props.settings}
-          nightOrDay={props.nightOrDay}
           addCancelThunk={props.addCancelThunk}
           setCreteTask={props.setCreteTask}
           dropDownAPI={props.dropDownAPI}
@@ -74,12 +49,11 @@ const BodyPomodoro = (props: IBodyPomodoro) => {
           pressSkipBreak={props.pressSkipBreak}
           viewTask={props.viewTask}
           APITimer={props.APITimer}
-          timerIsRun={props.timerIsRun}
-          timerPause={props.timerPause}
+          timerPauseOrRun={props.timerPauseOrRun}
         />
       )}
     </div>
   );
 };
 
-export default BodyPomodoro;
+export default NightOrDay(BodyPomodoro);
