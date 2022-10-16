@@ -1,10 +1,8 @@
 import * as React from "react";
 import Statistics from "./Statistics.tsx";
 import { connect } from "react-redux";
-import { setActiveDay } from "../../store/StatisticsReducer.ts";
-
+import { setActiveDay } from "../../store/reducers/StatisticsReducer.ts";
 import useGetInfoTask from "../../hooks/useGetInfoTask.tsx";
-import useAppDayOrNight from "../../hooks/useAppDayOrNight.tsx";
 
 interface IStatisticsContainer {
   setDayOrNight: () => {};
@@ -12,12 +10,12 @@ interface IStatisticsContainer {
   optionSelect: number;
   setActiveDay: () => {};
   completedTask: [{}];
-  compiltTaskTEST: {};
+  completeTaskTEST: {};
   activeDay: string;
 }
 
 const StatisticsContainer = (props: IStatisticsContainer) => {
-  const [tasks, maxTimeTask] = useGetInfoTask(props.compiltTaskTEST);
+  const [tasks, maxTimeTask] = useGetInfoTask(props.completeTaskTEST);
   return (
     <div>
       {tasks && (
@@ -36,7 +34,7 @@ const mapStateToProps = (state: any) => {
   return {
     optionSelect: state.Statistics.optionSelect,
     completedTask: state.Statistics.completedTask,
-    compiltTaskTEST: state.Statistics.compiltTaskTEST,
+    completeTaskTEST: state.Statistics.completeTaskTEST,
     activeDay: state.Statistics.activeDay,
     nightOrDay: state.MainPage.nightOrDay,
   };

@@ -8,15 +8,17 @@ import useGetNameButton from "../../../utils/getNameButton.tsx";
 import ViewTask from "../../../HOK/ViewTask";
 import NightOrDay from "../../../HOK/NightOrDay";
 import { IBodyPomodoro } from "../BodyPomodoro";
+import { useDispatch } from "react-redux";
+import { addMinute } from "../../../store/reducers/MainReducer";
 
 const PomodoroRight = (props: IBodyPomodoro) => {
+  const dispatch = useDispatch();
   const btnActions = useGetNameButton(
     props.timerPauseOrRun,
     props.viewTask.isBreak,
     props.viewTask.isPause,
     props.APITimer,
     props.viewTask.id,
-    props.pressSkipBreak,
     props.dropDownAPI,
     props.addCancelThunk,
     props.setCreteTask,
@@ -46,7 +48,7 @@ const PomodoroRight = (props: IBodyPomodoro) => {
               <div
                 className={S.btnAdd}
                 onClick={() => {
-                  props.addMinute(props.viewTask.id);
+                  dispatch(addMinute(props.viewTask.id));
                 }}
               >
                 <Add className={S.img} />
@@ -60,11 +62,11 @@ const PomodoroRight = (props: IBodyPomodoro) => {
           <div>
             <div className={S.btn}>
               <MyButton
-                hendler={btnActions.l.action}
+                handler={btnActions.l.action}
                 title={btnActions.l.title}
               />
               <MyButton
-                hendler={btnActions.r.action}
+                handler={btnActions.r.action}
                 title={btnActions.r.title}
                 disabled={btnActions.r.disabled}
                 stop={true}

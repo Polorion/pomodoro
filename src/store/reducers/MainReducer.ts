@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { Action } from "redux";
-import { AppStateType } from "./Store";
+import { AppStateType } from "../Store";
 
 const SET_TASK = "SET_TASK";
 const SET_DAY_OR_NIGHT = "SET_DAY_OR_NIGHT";

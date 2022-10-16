@@ -7,12 +7,12 @@ import FocusBlock from "./FocusBlock/FocusBlock.tsx";
 import PauseBlock from "./PauseBlock/PauseBlock.tsx";
 import CancelBlock from "./CancelBlock/CancelBlock.tsx";
 
-interface IStatiscticsFooter {
+interface IStatisticsFooter {
   activeDay: any;
   nightOrDay: boolean;
 }
 
-const StatiscticsFooter = (props: IStatiscticsFooter) => {
+const StatisticsFooter = (props: IStatisticsFooter) => {
   const isActive = !!props.activeDay;
   return (
     <div className={`${S.footer}  ${props.nightOrDay ? S.day : S.night}`}>
@@ -38,4 +38,4 @@ const StatiscticsFooter = (props: IStatiscticsFooter) => {
   );
 };
 
-export default StatiscticsFooter;
+export default StatisticsFooter;

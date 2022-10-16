@@ -20,7 +20,7 @@ const TomatoBlock = (props: ITomatoBlock) => {
           <span>{props.activeDay.tomato}</span>
         </div>
       )}
-      <div className={`${props.activeDay ? S.tomatoFooter : S.transorent}`}>
+      <div className={`${props.activeDay ? S.tomatoFooter : S.transparent}`}>
         <span>{props.activeDay.tomato}</span>
         Помидор
       </div>

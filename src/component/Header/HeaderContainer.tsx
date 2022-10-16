@@ -1,7 +1,7 @@
 import * as React from "react";
 import Header from "./Header.tsx";
 import { connect } from "react-redux";
-import { setNightOrDay, timerRun } from "../../store/MainReducer.ts";
+import { setNightOrDay, timerRun } from "../../store/reducers/MainReducer.ts";
 
 interface IHeaderContainer {
   setNightOrDay: any;
@@ -12,7 +12,6 @@ interface IHeaderContainer {
 }
 
 const HeaderContainer = (props: IHeaderContainer) => {
-  console.log(props, 33);
   const stopAllInterval = () => {
     clearInterval(props.intervalPaused);
     clearInterval(props.intervalGo);

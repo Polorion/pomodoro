@@ -1,5 +1,4 @@
-const transormTaskForStatistic = (task) => {
-  console.log(task, 1212);
+const transformTaskForStatistic = (task) => {
   return {
     timeOfPaused: task.timePaused,
     timeOfWorking: task.allTimeWork,
@@ -9,4 +8,4 @@ const transormTaskForStatistic = (task) => {
   };
 };
 
-export default transormTaskForStatistic;
+export default transformTaskForStatistic;

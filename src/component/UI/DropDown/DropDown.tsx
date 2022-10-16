@@ -1,9 +1,7 @@
 import * as React from "react";
 import drop from "../../../assets/img/dropDown.svg";
 import S from "./DropDown.module.scss";
-import DropItem from "./DropDownList/DropItem/DropItem.tsx";
-import ReactDOM from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import DropDownList from "./DropDownList/DropDownList.tsx";
 
 interface IDropDown {
@@ -13,7 +11,7 @@ interface IDropDown {
 }
 
 const DropDown = (props: IDropDown) => {
-  const [coordinat, setCoordinats] = useState({});
+  const [coordinate, setCoordinate] = useState({});
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -23,7 +21,7 @@ const DropDown = (props: IDropDown) => {
       className={S.doby}
       onClick={() => {
         if (ref.current) {
-          setCoordinats(ref.current.getBoundingClientRect());
+          setCoordinate(ref.current.getBoundingClientRect());
         }
         setOpen(!open);
       }}
@@ -32,7 +30,7 @@ const DropDown = (props: IDropDown) => {
       {open && (
         <DropDownList
           presumablyTomato={props.presumablyTomato}
-          coordinat={coordinat}
+          coordinate={coordinate}
           dropDownAPI={props.dropDownAPI}
           id={props.id}
         />

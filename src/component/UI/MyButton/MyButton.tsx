@@ -5,13 +5,13 @@ interface IMyButton {
   title: string;
   stop?: boolean;
   disabled?: boolean;
-  hendler?: () => {};
+  handler?: () => {};
 }
 
 const MyButton = (props: IMyButton) => {
   return (
     <button
-      onClick={props.hendler && props.hendler}
+      onClick={props.handler && props.handler}
       className={`${S.button} ${props.stop && S.stop} ${
         props.disabled && S.disabled
       } `}

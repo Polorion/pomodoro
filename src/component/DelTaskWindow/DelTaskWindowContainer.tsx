@@ -2,7 +2,7 @@ import * as React from "react";
 import DelTaskWindow from "./DelTaskWindow.tsx";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { deleteTask } from "../../store/MainReducer.ts";
+import { deleteTask } from "../../store/reducers/MainReducer.ts";
 
 interface IDelTaskWindowContainer {
   allTask: [{ id: string }];

@@ -10,7 +10,7 @@ interface IIntention {
   id: string;
   presumablyTomato: number;
   setActiveTaskThunk: any;
-  coordinats: {};
+  coordinate: {};
   activeTask: string;
   stopTimer: () => {};
   addMinute: () => {};

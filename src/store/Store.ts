@@ -6,9 +6,9 @@ import {
 
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import MainReducer from "./MainReducer.ts";
+import MainReducer from "./reducers/MainReducer.ts";
 
-import StatisticsReducer from "./StatisticsReducer.ts";
+import StatisticsReducer from "./reducers/StatisticsReducer.ts";
 
 import thunk from "redux-thunk";
 

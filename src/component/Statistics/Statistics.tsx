@@ -1,9 +1,7 @@
 import * as React from "react";
-import S from "./Statistics.module.scss";
-
-import StatiscticsHead from "./StatiscticsHead/StatiscticsHead.tsx";
-import StatiscticsBody from "./StatiscticsBody/StatiscticsBody.tsx";
-import StatiscticsFooter from "./StatiscticsFooter/StatiscticsFooter.tsx";
+import StatisticsHead from "./StatiscticsHead/StatisticsHead.tsx";
+import StatisticsBody from "./StatiscticsBody/StatisticsBody.tsx";
+import StatisticsFooter from "./StatiscticsFooter/StatisticsFooter.tsx";
 
 interface IStatistics {
   activeDay: string;
@@ -18,18 +16,18 @@ interface IStatistics {
 const Statistics = (props: IStatistics) => {
   return (
     <div className={"container"}>
-      <StatiscticsHead
+      <StatisticsHead
         setActiveTask={props.setActiveTask}
         optionSelect={props.optionSelect}
       />
-      <StatiscticsBody
+      <StatisticsBody
         nightOrDay={props.nightOrDay}
         tasks={props.tasks}
         maxTimeTask={props.maxTimeTask}
         setActiveDay={props.setActiveDay}
         activeDay={props.activeDay}
       />
-      <StatiscticsFooter
+      <StatisticsFooter
         activeDay={props.activeDay}
         nightOrDay={props.nightOrDay}
       />

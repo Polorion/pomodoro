@@ -79,7 +79,7 @@ const PomodoroLeft = (props: IPomodoroLeft) => {
             />
           ))}
         </ul>
-        <div className={S.tomatToTime}>
+        <div className={S.tomatoToTime}>
           {props.convertTomatoFromTime.h > 0 &&
             props.convertTomatoFromTime.h + "час"}{" "}
           {props.convertTomatoFromTime.min} мин

@@ -7,7 +7,7 @@ import Column from "./Column/Column.tsx";
 import DayBlock from "./DayBlock/DayBlock.tsx";
 import TomatoBlock from "./TomatoBlock/TomatoBlock.tsx";
 
-interface IStatiscticsBody {
+interface IStatisticsBody {
   setActiveDay: () => {};
   tasks: [{ id: string }];
   activeDay: {
@@ -21,7 +21,7 @@ interface IStatiscticsBody {
   };
 }
 
-const StatiscticsBody = (props: IStatiscticsBody) => {
+const StatisticsBody = (props: IStatisticsBody) => {
   const row = getRows(props.maxTimeTask.allTime.allSec);
   return (
     <div className={`${S.body} ${props.nightOrDay ? S.day : S.night}`}>
@@ -53,4 +53,4 @@ const StatiscticsBody = (props: IStatiscticsBody) => {
   );
 };
 
-export default StatiscticsBody;
+export default StatisticsBody;

@@ -1,8 +1,8 @@
 import * as React from "react";
 import Settings from "./Settings.tsx";
 import { connect } from "react-redux";
-import { deleteTask } from "../../store/MainReducer.ts";
-import { setSettings } from "../../store/StatisticsReducer.ts";
+import { deleteTask } from "../../store/reducers/MainReducer.ts";
+import { setSettings } from "../../store/reducers/StatisticsReducer.ts";
 
 interface ISettingsContainer {
   allTask: [{ id: string }];

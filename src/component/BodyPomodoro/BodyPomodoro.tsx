@@ -45,8 +45,6 @@ const BodyPomodoro = (props: IBodyPomodoro) => {
           addCancelThunk={props.addCancelThunk}
           setCreteTask={props.setCreteTask}
           dropDownAPI={props.dropDownAPI}
-          addMinute={props.addMinute}
-          pressSkipBreak={props.pressSkipBreak}
           viewTask={props.viewTask}
           APITimer={props.APITimer}
           timerPauseOrRun={props.timerPauseOrRun}

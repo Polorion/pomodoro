@@ -26,7 +26,7 @@ export const setCreteTask = (day: string, task: string) => {
   };
 };
 const initionalState = {
-  compiltTaskTEST: {
+  completeTaskTEST: {
     Monday: [],
     Tuesday: [
       {
@@ -77,10 +77,10 @@ const StatisticsReducer = (
     case SET_CREATE_TASK:
       return {
         ...state,
-        compiltTaskTEST: {
-          ...state.compiltTaskTEST,
+        completeTaskTEST: {
+          ...state.completeTaskTEST,
           // @ts-ignore
-          [action.day]: [...state.compiltTaskTEST[action.day], action.task],
+          [action.day]: [...state.completeTaskTEST[action.day], action.task],
         },
       };
     default:

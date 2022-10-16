@@ -27,7 +27,7 @@ const Header = (props: IHeader) => {
           <Logo />
           <p>pomodoro_box</p>
         </div>
-        <button onClick={settingsClick}>setings</button>
+        <button onClick={settingsClick}>settings</button>
         <NightOrDay
           nightOrDay={props.nightOrDay}
           setNightOrDay={props.setNightOrDay}

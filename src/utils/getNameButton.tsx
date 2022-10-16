@@ -6,7 +6,6 @@ const getNameButton = (
   isPause: any,
   APITimer: any,
   task: any,
-  pressSkipBreak: any,
   dropDownAPI: any,
   addCancelThunk: any,
   setCreteTask: any,
@@ -30,7 +29,7 @@ const getNameButton = (
   const skipBreak = () => {
     APITimer.stopTimerPaused();
     APITimer.stopTimer();
-    pressSkipBreak(task, settings.workTime);
+    APITimer.pressSkipBreak(task, settings.workTime);
     timerPauseOrRun.timerPause(task, false);
   };
   const complit = () => {

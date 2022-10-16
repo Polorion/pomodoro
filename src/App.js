@@ -9,7 +9,7 @@ import StatisticsContainer from "./component/Statistics/StatisticsContainer.tsx"
 import HeaderContainer from "./component/Header/HeaderContainer.tsx";
 import SettingsContainer from "./component/Settings/SettingsContainer.tsx";
 import { connect } from "react-redux";
-import { setActiveDay } from "./store/StatisticsReducer";
+import { setActiveDay } from "./store/reducers/StatisticsReducer";
 
 function App(props) {
   const mounted = UseIsMounted();

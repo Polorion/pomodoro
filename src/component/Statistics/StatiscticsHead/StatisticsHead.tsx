@@ -2,12 +2,12 @@ import * as React from "react";
 import S from "./../Statistics.module.scss";
 import Select from "../../UI/Select/Select.tsx";
 
-interface IStatiscticsHead {
+interface IStatisticsHead {
   optionSelect: string;
   setActiveTask: (s: string) => {};
 }
 
-const StatiscticsHead = (props: IStatiscticsHead) => {
+const StatisticsHead = (props: IStatisticsHead) => {
   const select = (
     <Select
       value={props.optionSelect}
@@ -38,4 +38,4 @@ const StatiscticsHead = (props: IStatiscticsHead) => {
   );
 };
 
-export default StatiscticsHead;
+export default StatisticsHead;

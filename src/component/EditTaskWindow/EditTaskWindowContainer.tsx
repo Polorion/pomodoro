@@ -2,7 +2,7 @@ import * as React from "react";
 import EditTaskWindow from "./EditTaskWindow.tsx";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { editInputText, taskEdit } from "../../store/MainReducer.ts";
+import { editInputText, taskEdit } from "../../store/reducers/MainReducer.ts";
 
 interface IEditTaskWindowContainer {
   taskEdit: string;

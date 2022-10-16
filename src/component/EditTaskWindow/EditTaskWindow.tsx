@@ -6,7 +6,7 @@ import useGoToHome from "../../hooks/useGoToHome.tsx";
 
 interface IEditTaskWindow {
   editInput: string;
-  taskEdit: (taks: any) => {};
+  taskEdit: (task: any) => {};
   editInputText: (t: string) => {};
   task: {
     task: string;
@@ -40,7 +40,7 @@ const EditTaskWindow = (props: IEditTaskWindow) => {
           <label>
             <input onChange={changeValue} value={props.editInput} type="text" />
           </label>
-          <MyButton hendler={saveEdit} title={"save"} />
+          <MyButton handler={saveEdit} title={"save"} />
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ import GeneratorRandomString from "../../../../utils/GeneratorRandomString";
 import UseGetDropDownLiData from "../../../../hooks/useGetDropDownLiData.tsx";
 interface IDropDownList {
   presumablyTomato: number;
-  coordinat: {
+  coordinate: {
     y: number;
     x: number;
   };
@@ -29,8 +29,8 @@ const DropDownList = (props: IDropDownList) => {
   );
   useEffect(() => {
     if (ref.current !== null) {
-      ref.current.style.top = props.coordinat.y + 35 + window.scrollY + "px";
-      ref.current.style.left = props.coordinat.x - 80 + "px";
+      ref.current.style.top = props.coordinate.y + 35 + window.scrollY + "px";
+      ref.current.style.left = props.coordinate.x - 80 + "px";
       ref.current.style.position = "absolute";
     }
   }, []);

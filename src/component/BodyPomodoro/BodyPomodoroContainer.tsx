@@ -3,7 +3,6 @@ import BodyPomodoro from "./BodyPomodoro.tsx";
 import { connect } from "react-redux";
 import { Outlet } from "react-router-dom";
 import {
-  addMinute,
   addTomato,
   deleteTask,
   pressSkipBreak,
@@ -20,12 +19,12 @@ import {
   setPreTomato,
   setPreTimeTomato,
   setBreak,
-} from "../../store/MainReducer.ts";
+} from "../../store/reducers/MainReducer.ts";
 import useInterval from "../../hooks/useInterval.tsx";
 import useSetActiveTask from "../../hooks/useSetActiveTask.tsx";
-import { setCreteTask } from "../../store/StatisticsReducer.ts";
+import { setCreteTask } from "../../store/reducers/StatisticsReducer.ts";
 import getNowDay from "../../utils/getNowDay.ts";
-import transormTaskForStatistic from "../../utils/transormTaskForStatistic";
+import transformTaskForStatistic from "../../utils/transformTaskForStatistic";
 import useGetTimeBottomForm from "../../hooks/useGetTimeBottomForm.tsx";
 import SongPlay from "../../HOK/SongPlay";
 import ViewTask from "../../HOK/ViewTask";
@@ -150,7 +149,7 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
     const task = props.allTask.map((el) => {
       if (el.id === props.activeTask) return el;
     });
-    props.setCreteTask(getNowDay(), transormTaskForStatistic(task[0]));
+    props.setCreteTask(getNowDay(), transformTaskForStatistic(task[0]));
   };
   useGetTimeBottomForm(props.allTask, props.setPreTimeTomato);
   return (
@@ -161,17 +160,21 @@ const BodyPomodoroContainer = (props: IBodyPomodoroContainer) => {
         settings={props.settings}
         convertTomatoFromTime={props.convertTomatoFromTime}
         setCreteTask={creatTask}
-        pressSkipBreak={props.pressSkipBreak}
         setCountItem={props.setCountItem}
         timerPauseOrRun={{
           timerPause: props.timerPause,
           timerIsRun: props.timerIsRun,
         }}
-        addMinute={props.addMinute}
         allTask={props.allTask}
         setTask={props.setTask}
         activeTask={props.activeTask}
-        APITimer={{ startTimer, stopTimer, startTimerPaused, stopTimerPaused }}
+        APITimer={{
+          startTimer,
+          stopTimer,
+          startTimerPaused,
+          stopTimerPaused,
+          pressSkipBreak: props.pressSkipBreak,
+        }}
         setActiveTaskThunk={props.setActiveTaskThunk}
         addCancelThunk={props.addCancelThunk}
         dropDownAPI={{
@@ -203,7 +206,6 @@ export default connect(mapStateToProps, {
   timerRun,
   addTomato,
   subTomato,
-  addMinute,
   timerPause,
   setCountItem,
   deleteTask,
